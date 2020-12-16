@@ -4,16 +4,16 @@ public class Item {
 
 	private Long id;
 	private String itemName;
-	private int quantity;
+	private Long quantity;
 	private double price;
 	
-	public Item(String itemName, int quantity, double price) {
+	public Item(String itemName, Long quantity, double price) {
 		this.itemName = itemName;
 		this.quantity = quantity;
 		this.price = price;
 	}
 	
-	public Item(Long id, String itemName, int quantity, double price) {
+	public Item(Long id, String itemName, Long quantity, double price) {
 		this.id = id;
 		this.itemName = itemName;
 		this.quantity = quantity;
@@ -36,11 +36,11 @@ public class Item {
 		this.itemName = itemName;
 	}
 
-	public int getQuantity() {
+	public Long getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(Long quantity) {
 		this.quantity = quantity;
 	}
 

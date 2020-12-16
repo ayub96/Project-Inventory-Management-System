@@ -23,8 +23,8 @@ public class ItemDAO implements Dao<Item> {
 	@Override
 	public Item modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("id");
-		String itemName = resultSet.getString("item_name");
-		int quantity = resultSet.getInt("quantity");
+		String itemName = resultSet.getString("name");
+		Long quantity = resultSet.getLong("quantity");
 		double price = resultSet.getDouble("price");
 		return new Item(id, itemName, quantity, price);
 	}
@@ -35,7 +35,7 @@ public class ItemDAO implements Dao<Item> {
 	public List<Item> readAll(){
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("select * from customers");) {
+				ResultSet resultSet = statement.executeQuery("select * from items");) {
 			List<Item> items = new ArrayList<>();
 			while (resultSet.next()) {
 				items.add(modelFromResultSet(resultSet));
@@ -66,7 +66,7 @@ public class ItemDAO implements Dao<Item> {
 	public Item create(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("INSERT INTO items(item_name, quantity, price) values('" + item.getItemName()
+			statement.executeUpdate("INSERT INTO items(name, quantity, price) values('" + item.getItemName()
 					+ "','" + item.getQuantity() + "','" + item.getPrice() + "')");
 			return readLatest();
 		} catch (Exception e) {
@@ -93,7 +93,7 @@ public class ItemDAO implements Dao<Item> {
 	public Item update(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("update items set item_name ='" + item.getItemName() + "', quantity ='"
+			statement.executeUpdate("update items set name ='" + item.getItemName() + "', quantity ='"
 					+ item.getQuantity() + "', price ='" + item.getPrice() + "' where id =" + item.getId());
 			return readItem(item.getId());
 		} catch (Exception e) {
