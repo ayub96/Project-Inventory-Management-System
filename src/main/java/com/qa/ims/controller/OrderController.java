@@ -62,14 +62,18 @@ public class OrderController implements CrudController<Order> {
 			LOGGER.info("Please enter the quantity of the item");
 			Long quantity = utils.getLong();
 			Item item = itemDAO.readItem(item_id);
-			if(item.getQuantity() < quantity) {
-				LOGGER.info("ERROR: desired quantity exceeds stock!");
+			Long stock = item.getQuantity();
+			if(stock < quantity) {
+				LOGGER.info("ERROR: insufficient stock!");
 			}
 			else {
 				for(int i=0; i<quantity; i++) {
 					orderDAO.createOrderline(order_id, item_id);
 				}
 				LOGGER.info("Order updated!");
+				stock -= quantity;
+				item.setQuantity(stock);
+				itemDAO.update(item);
 			}
 			LOGGER.info("Add another item? (1:yes/2:no)");
 			response = utils.getLong();
