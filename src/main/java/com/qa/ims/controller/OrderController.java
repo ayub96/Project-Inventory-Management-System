@@ -50,7 +50,7 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("Please enter the customer ID");
 		Long customer_id = utils.getLong();
 		Order order = orderDAO.create(new Order(customer_id));
-		update();
+		LOGGER.info("Order created. ID:" + order.getOrder_id());
 		return order;
 	}
 

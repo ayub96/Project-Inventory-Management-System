@@ -28,9 +28,24 @@ public class OrderDAO implements Dao<Order> {
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long order_id = resultSet.getLong("id");
 		Long customer_id = resultSet.getLong("fk_customer_id");
-//		Long item_id = resultSet.getLong("fk_item_id");
-//		double total = resultSet.getDouble("total");
-		return new Order(order_id, customer_id);
+		List<Item> items = readOrderline(order_id);
+		return new Order(order_id, customer_id, items);
+	}
+	
+	public List<Item> readOrderline(Long id) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM orderline where fk_order_id = " + id);) {
+			List<Item> items = new ArrayList<>();
+			while (resultSet.next()) {
+				items.add(itemDAO.readItem(resultSet.getLong("fk_item_id")));
+			}
+			return items;
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
 	}
 	
 	@Override
