@@ -58,7 +58,7 @@ public class Order {
 			total = total + item.getPrice();
 			myItems = myItems + item.toString() + "\n";
 		}
-		return "[order ID:" + order_id +  "] \t [customer ID:" + customer_id + "] \t [items: " + myItems + "] \t [Total cost = " + total + "]";
+		return "[order ID: " + order_id +  "]\n[customer ID: " + customer_id + "]\n[items]:\n" + myItems + "[Total cost: £" + total + "]\t";
 	}
 
 	public Long getItem_id() {
