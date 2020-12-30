@@ -1,25 +1,38 @@
 package com.qa.ims.persistence.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Order {
 
 	private Long order_id;
 	private Long customer_id;
-	private Long date_placed;
-	private double total;
+	private Long item_id;
+	private List<Item> items = new ArrayList<>();
 	
-	public Order(Long order_id, Long customer_id, Long date_placed, double total) {
+	public Order() {
+
+	}
+	
+	public Order(Long customer_id) {
+		this.customer_id = customer_id;
+	}
+	
+	public Order(Long order_id, Long customer_id) {	//super here?
+		super();
 		this.order_id = order_id;
 		this.customer_id = customer_id;
-		this.date_placed = date_placed;
-		this.total = total;
+		
 	}
 	
-	public Order(Long customer_id, Long date_placed, double total) {
+	public Order(Long order_id, Long customer_id, List<Item> items) {	//super here?
+		super();
+		this.order_id = order_id;
 		this.customer_id = customer_id;
-		this.date_placed = date_placed;
-		this.total = total;
+		this.items = items;
+		
 	}
-
+	
 	public Long getOrder_id() {
 		return order_id;
 	}
@@ -36,20 +49,24 @@ public class Order {
 		this.customer_id = customer_id;
 	}
 
-	public Long getDate_placed() {
-		return date_placed;
+	
+	@Override
+	public String toString() {
+		double total = 0.0;
+		String myItems = "";
+		for(Item item : items) {
+			total = total + item.getPrice();
+			myItems = myItems + item.toString() + "\n";
+		}
+		return "[order ID:" + order_id +  "] \t [customer ID:" + customer_id + "] \t [items: " + myItems + "] \t [Total cost = " + total + "]";
 	}
 
-	public void setDate_placed(Long date_placed) {
-		this.date_placed = date_placed;
+	public Long getItem_id() {
+		return item_id;
 	}
 
-	public double getTotal() {
-		return total;
-	}
-
-	public void setTotal(double total) {
-		this.total = total;
+	public void setItem_id(Long item_id) {
+		this.item_id = item_id;
 	}
 	
 }
