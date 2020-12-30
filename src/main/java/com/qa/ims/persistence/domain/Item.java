@@ -70,7 +70,11 @@ public class Item {
 	
 	@Override
 	public String toString() {
-		return "[id:" + id + " name:" + itemName + " price:" + price + " stock:" + quantity + "]";
+		return "{id: " + id + "\tname: " + itemName + "\tprice: " + price + "\tstock: " + quantity + "}";
+	}
+	
+	public String toOrderString() {
+		return "  {id: " + id + "\tname: " + itemName + "\tprice: " + price + "}";
 	}
 	
 	@Override

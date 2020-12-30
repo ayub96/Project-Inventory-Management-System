@@ -32,53 +32,54 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public List<Order> readAll() {
-		LOGGER.info("");
 		List<Order> orders = orderDAO.readAll();
 		for(Order order : orders) {
-			LOGGER.info(order.toString() + "\n");
+			LOGGER.info("\n" + order.toString());
 		}
 		return orders;
 	}
 	
 	@Override
 	public Order create() {
-		LOGGER.info("Please enter the customer ID");
+		LOGGER.info("\nPlease enter the customer ID");
 		Long customer_id = utils.getLong();
 		Order order = orderDAO.create(new Order(customer_id));
-		LOGGER.info("Order created! (ID:" + order.getOrder_id() + ")\n");
+		LOGGER.info("\nOrder created! (ID:" + order.getOrder_id() + ")");
 		return order;
 	}
 
 	@Override
 	public Order update() {
-		LOGGER.info("Please enter ID of order to update");
 		readAll();
+		LOGGER.info("\nPlease enter ID of order to update");
 		Long order_id = utils.getLong();
-		Long response = 0L;
+		LOGGER.info("");
+		String response = "";
 		do {
-			LOGGER.info("Please enter ID of item to add");
 			itemController.readAll();
+			LOGGER.info("\nPlease enter ID of item to add");
 			Long item_id = utils.getLong();
-			LOGGER.info("Please enter the quantity of the item");
+			LOGGER.info("\nPlease enter the quantity of the item");
 			Long quantity = utils.getLong();
 			Item item = itemDAO.readItem(item_id);
 			Long stock = item.getQuantity();
 			if(stock < quantity) {
-				LOGGER.info("ERROR: insufficient stock!");
+				LOGGER.info("\nERROR: insufficient stock!");
 			}
 			else {
 				for(int i=0; i<quantity; i++) {
 					orderDAO.createOrderline(order_id, item_id);
 				}
-				LOGGER.info("Order updated!");
 				stock -= quantity;
 				item.setQuantity(stock);
 				itemDAO.update(item);
+				Order order = orderDAO.readOrder(order_id);
+				orderDAO.updateDatetime(order);
 			}
-			LOGGER.info("Add another item? (1:yes/2:no)");
-			response = utils.getLong();
-		}while(response == 1);
-		LOGGER.info("Order Updated!");
+			LOGGER.info("\nAdd another item? [y/n]");
+			response = utils.getString();
+		}while(response.equals("y"));
+		LOGGER.info("\nOrder Updated!");
 		return null;
 	}
 
