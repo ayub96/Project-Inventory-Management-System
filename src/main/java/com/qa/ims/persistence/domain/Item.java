@@ -70,7 +70,7 @@ public class Item {
 	
 	@Override
 	public String toString() {
-		return "[id:" + id + " item name:" + itemName + " price:" + price + "]";
+		return "[id:" + id + " name:" + itemName + " price:" + price + " stock:" + quantity + "]";
 	}
 	
 	@Override

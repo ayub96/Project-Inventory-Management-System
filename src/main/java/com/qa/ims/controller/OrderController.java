@@ -9,10 +9,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.dao.ItemDAO;
 import com.qa.ims.persistence.dao.OrderDAO;
-import com.qa.ims.persistence.dao.OrderItemDAO;
 import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.persistence.domain.Order;
-import com.qa.ims.persistence.domain.OrderItem;
 import com.qa.ims.utils.Utils;
 
 public class OrderController implements CrudController<Order> {
@@ -22,13 +20,13 @@ public class OrderController implements CrudController<Order> {
 	private OrderDAO orderDAO;
 	private ItemDAO itemDAO;
 	private Utils utils;
+	private ItemController itemController;
 	
-	
-
-	public OrderController(OrderDAO orderDAO, ItemDAO itemDAO, Utils utils) {
+	public OrderController(OrderDAO orderDAO, ItemDAO itemDAO, ItemController itemController, Utils utils) {
 		super();
-		this.orderDAO = orderDAO;
+		this.itemController = itemController;
 		this.itemDAO = itemDAO;
+		this.orderDAO = orderDAO;
 		this.utils = utils;
 	}
 
@@ -37,34 +35,42 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("");
 		List<Order> orders = orderDAO.readAll();
 		for(Order order : orders) {
-			LOGGER.info(order.toString());
+			LOGGER.info(order.toString() + "\n");
 		}
-		LOGGER.info("");
 		return orders;
-		
 	}
 	
 	@Override
 	public Order create() {
-		
 		LOGGER.info("Please enter the customer ID");
 		Long customer_id = utils.getLong();
 		Order order = orderDAO.create(new Order(customer_id));
-		LOGGER.info("Order created. ID:" + order.getOrder_id());
+		LOGGER.info("Order created! (ID:" + order.getOrder_id() + ")\n");
 		return order;
 	}
 
-
 	@Override
 	public Order update() {
-		LOGGER.info("Please enter the id of the order you would like to update");
+		LOGGER.info("Please enter ID of order to update");
+		readAll();
 		Long order_id = utils.getLong();
 		Long response = 0L;
 		do {
-			LOGGER.info("Please enter the id of the item you would like to add to order");
+			LOGGER.info("Please enter ID of item to add");
+			itemController.readAll();
 			Long item_id = utils.getLong();
-			orderDAO.createOrderline(order_id, item_id);
-			LOGGER.info("Order updated!");
+			LOGGER.info("Please enter the quantity of the item");
+			Long quantity = utils.getLong();
+			Item item = itemDAO.readItem(item_id);
+			if(item.getQuantity() < quantity) {
+				LOGGER.info("ERROR: desired quantity exceeds stock!");
+			}
+			else {
+				for(int i=0; i<quantity; i++) {
+					orderDAO.createOrderline(order_id, item_id);
+				}
+				LOGGER.info("Order updated!");
+			}
 			LOGGER.info("Add another item? (1:yes/2:no)");
 			response = utils.getLong();
 		}while(response == 1);
@@ -74,9 +80,8 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public int delete() {
-		LOGGER.info("Please enter the id of the item you would like to delete");
+		LOGGER.info("Please enter the id of the order you would like to delete");
 		Long order_id = utils.getLong();
 		return orderDAO.delete(order_id);
 	}
-
 }
