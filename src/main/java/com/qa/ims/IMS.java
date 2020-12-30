@@ -30,20 +30,20 @@ public class IMS {
 		this.customers = new CustomerController(custDAO, utils);
 		final ItemDAO itemDAO = new ItemDAO();
 		this.items = new ItemController(itemDAO, utils);
-		final OrderDAO orderDAO = new OrderDAO(itemDAO);
+		final OrderDAO orderDAO = new OrderDAO(itemDAO, custDAO);
 		this.orders = new OrderController(orderDAO, itemDAO, items, utils);
 	}	
 	
 	public void imsSystem() {
 		LOGGER.info("What is your username");
 		String username = utils.getString();
-		LOGGER.info("What is your password");
+		LOGGER.info("\nWhat is your password");
 		String password = utils.getString();
 
 		DBUtils.connect(username, password);
 		Domain domain = null;
 		do {
-			LOGGER.info("Which entity would you like to use?");
+			LOGGER.info("\nWhich entity would you like to use?");
 			Domain.printDomains();
 
 			domain = Domain.getDomain(utils);
@@ -67,7 +67,7 @@ public class IMS {
 					break;
 				}
 
-				LOGGER.info("What would you like to do with " + domain.name().toLowerCase() + ":");
+				LOGGER.info("\nWhat would you like to do with " + domain.name().toLowerCase() + ":");
 
 				Action.printActions();
 				Action action = Action.getAction(utils);

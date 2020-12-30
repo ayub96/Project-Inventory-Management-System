@@ -10,6 +10,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.DBUtils;
@@ -19,9 +20,11 @@ public class OrderDAO implements Dao<Order> {
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	private ItemDAO itemDAO;
+	private CustomerDAO customerDAO;
 
-	public OrderDAO(ItemDAO itemDAO) {
+	public OrderDAO(ItemDAO itemDAO, CustomerDAO customerDAO) {
 		this.itemDAO = itemDAO;
+		this.customerDAO = customerDAO;
 	}
 
 	@Override
@@ -29,7 +32,25 @@ public class OrderDAO implements Dao<Order> {
 		Long order_id = resultSet.getLong("id");
 		Long customer_id = resultSet.getLong("fk_customer_id");
 		List<Item> items = readOrderline(order_id);
-		return new Order(order_id, customer_id, items);
+		List<Customer> customers = readCustomer(order_id);
+		String date = resultSet.getString("date");
+		return new Order(order_id, customer_id, items, date, customers);
+	}
+	
+	public List<Customer> readCustomer(Long id) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM customers where id = " + id);) {
+			List<Customer> customers = new ArrayList<>();
+			while (resultSet.next()) {
+				customers.add(customerDAO.readCustomer(resultSet.getLong("id")));
+			}
+			return customers;
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
 	}
 	
 	public List<Item> readOrderline(Long id) {
@@ -123,6 +144,18 @@ public class OrderDAO implements Dao<Order> {
 				Statement statement = connection.createStatement();) {
 			statement.executeUpdate("update orders set id ='" + order.getOrder_id() + "', fk_customer_id ='"
 					+ order.getCustomer_id() + "' where id =" + order.getOrder_id());
+			return readOrder(order.getOrder_id());
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	}
+	
+	public Order updateDatetime(Order order) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+			statement.executeUpdate("UPDATE orders SET date = NOW() where id = " + order.getOrder_id());
 			return readOrder(order.getOrder_id());
 		} catch (Exception e) {
 			LOGGER.debug(e);

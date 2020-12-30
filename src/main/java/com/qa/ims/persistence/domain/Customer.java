@@ -45,6 +45,10 @@ public class Customer {
 	public String toString() {
 		return "id:" + id + " first name:" + firstName + " surname:" + surname;
 	}
+	
+	public String toOrderString() {
+		return firstName + " " + surname;
+	}
 
 	@Override
 	public boolean equals(Object obj) {

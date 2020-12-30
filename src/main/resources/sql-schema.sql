@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `ims`.`customers` (
 CREATE TABLE IF NOT EXISTS `ims`.`orders`(
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
     `fk_customer_id` INT NOT NULL,
+    `date` DATETIME DEFAULT NOW(),
 	FOREIGN KEY (`fk_customer_id`) REFERENCES customers(`id`),
     PRIMARY KEY (`id`)
 );
