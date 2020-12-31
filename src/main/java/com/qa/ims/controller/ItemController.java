@@ -60,16 +60,11 @@ public class ItemController implements CrudController<Item> {
 		LOGGER.info("Item Updated!");
 		return item;
 	}
-
+	
 	@Override
 	public int delete() {
-		LOGGER.info("Please enter the id of the item you would like to delete");
+		LOGGER.info("Please enter the item id (NOTE: any orderlines containing the item will also be deleted):");
 		Long id = utils.getLong();
 		return itemDAO.delete(id);
 	}
-
-	
-	
-	
-	
 }
