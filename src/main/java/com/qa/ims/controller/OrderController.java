@@ -1,7 +1,5 @@
 package com.qa.ims.controller;
 
-import java.sql.Date;
-import java.sql.ResultSet;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
