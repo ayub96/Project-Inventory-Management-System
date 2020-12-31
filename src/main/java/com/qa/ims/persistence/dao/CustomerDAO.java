@@ -120,6 +120,7 @@ public class CustomerDAO implements Dao<Customer> {
 	 */
 	@Override
 	public int delete(long id) {
+		deleteOrder(id);																	//???good practice for DAO functions to call eachother?
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
 			return statement.executeUpdate("delete from customers where id = " + id);
@@ -129,5 +130,27 @@ public class CustomerDAO implements Dao<Customer> {
 		}
 		return 0;
 	}
+	
+	public int deleteOrder(long id) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+			return statement.executeUpdate("delete from orders where fk_customer_id = " + id);
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return 0;
+	}
+	
+//	public int deleteOrderline(long id) {
+//		try (Connection connection = DBUtils.getInstance().getConnection();
+//				Statement statement = connection.createStatement();) {
+//			return statement.executeUpdate("delete from orderline where fk_customer_id = " + id);
+//		} catch (Exception e) {
+//			LOGGER.debug(e);
+//			LOGGER.error(e.getMessage());
+//		}
+//		return 0;
+//	}
 
 }

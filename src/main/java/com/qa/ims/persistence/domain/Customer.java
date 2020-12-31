@@ -43,7 +43,7 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "id:" + id + " first name:" + firstName + " surname:" + surname;
+		return "[customer id]: " + id + "\t[first name]: " + firstName + "\t[surname]: " + surname;
 	}
 	
 	public String toOrderString() {

@@ -27,7 +27,7 @@ public enum Action {
 	 * Describes the action
 	 */
 	public String getDescription() {
-		return this.name() + ": " + this.description;
+		return this.name() + ":\t" + this.description;
 	}
 
 	/**
