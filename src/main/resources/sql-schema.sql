@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `ims`.`orderline` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
 	`fk_order_id` INT NULL DEFAULT NULL,
 	`fk_item_id` INT NULL DEFAULT NULL,
+	`fk_customer_id` INT NULL DEFAULT NULL,
 	PRIMARY KEY (`id`),
 	FOREIGN KEY (`fk_order_id`) REFERENCES orders(`id`),
 	FOREIGN KEY (`fk_item_id`) REFERENCES items(`id`)
