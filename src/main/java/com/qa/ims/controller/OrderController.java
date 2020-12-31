@@ -21,6 +21,7 @@ public class OrderController implements CrudController<Order> {
 	private ItemDAO itemDAO;
 	private Utils utils;
 	private ItemController itemController;
+	boolean newOrder = false;
 	
 	public OrderController(OrderDAO orderDAO, ItemDAO itemDAO, ItemController itemController, Utils utils) {
 		super();
@@ -44,15 +45,25 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("\nPlease enter the customer ID");
 		Long customer_id = utils.getLong();
 		Order order = orderDAO.create(new Order(customer_id));
-		LOGGER.info("\nOrder created! (ID:" + order.getOrder_id() + ")");
+//		LOGGER.info("\nOrder created! (ID:" + order.getOrder_id() + ")");
+		newOrder = true;
+		update();
 		return order;
 	}
 
 	@Override
 	public Order update() {
-		readAll();
-		LOGGER.info("\nPlease enter ID of order to update");
-		Long order_id = utils.getLong();
+		Long order_id = 0L;
+		if(newOrder) {
+			Order order = orderDAO.readLatest();
+			order_id = order.getOrder_id();
+			newOrder = false;
+		}else {
+			readAll();
+			LOGGER.info("\nPlease enter ID of order to update");
+			order_id = utils.getLong();
+		}
+		
 		LOGGER.info("");
 		String response = "";
 		do {
@@ -76,7 +87,7 @@ public class OrderController implements CrudController<Order> {
 				Order order = orderDAO.readOrder(order_id);
 				orderDAO.updateDatetime(order);
 			}
-			LOGGER.info("\nAdd another item? [y/n]");
+			LOGGER.info("\nAdd a different item? [y/n]");
 			response = utils.getString();
 		}while(response.equals("y"));
 		LOGGER.info("\nOrder Updated!");
