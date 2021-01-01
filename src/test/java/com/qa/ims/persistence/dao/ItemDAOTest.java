@@ -9,59 +9,58 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.qa.ims.persistence.domain.Customer;
+import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.utils.DBUtils;
 
-public class CustomerDAOTest {
+public class ItemDAOTest {
 
-	private final CustomerDAO DAO = new CustomerDAO();
-	final Customer created1 = new Customer(1L,"chris", "perrins");
-	final Customer created2 = new Customer(2L,"jordan", "harrison");
-	
+	private final ItemDAO DAO = new ItemDAO();
+	final Item created1 = new Item(1L,"GTA", 50L, 29.99);
+	final Item created2 = new Item(2L,"PUBG", 60L, 39.99);
+
 	@BeforeClass
 	public static void init() {
 		DBUtils.connect("root", "root");
 	}
-
+	
 	@Before
 	public void setup() {
 		DBUtils.getInstance().init("src/test/resources/sql-schema.sql", "src/test/resources/sql-data.sql");
 		DAO.create(created1);
 		DAO.create(created2);
 	}
-
+	
 	@Test
 	public void testCreate() {
-		final Customer created3 = new Customer(3L,"michael", "jackson");
+		final Item created3 = new Item(3L, "Fortnite", 30L, 20.99);
 		assertEquals(created3, DAO.create(created3));
 	}
-
+	
 	@Test
 	public void testReadAll() {
-		List<Customer> expected = new ArrayList<>();
-		expected.add(new Customer(1L, "chris", "perrins"));
-		expected.add(new Customer(2L, "jordan", "harrison"));
+		List<Item> expected = new ArrayList<>();
+		expected.add(new Item(1L,"GTA", 50L, 29.99));
+		expected.add(new Item(2L,"PUBG", 60L, 39.99));
 		assertEquals(expected, DAO.readAll());
 	}
-
+	
 	@Test
 	public void testReadLatest() {
-		assertEquals(new Customer(2L, "jordan", "harrison"), DAO.readLatest());
+		assertEquals(new Item(2L,"PUBG", 60L, 39.99), DAO.readLatest());
 	}
-
+	
 	@Test
 	public void testRead() {
 		final long ID = 2L;
-		assertEquals(new Customer(ID, "jordan", "harrison"), DAO.readCustomer(ID));
+		assertEquals(new Item(2L,"PUBG", 60L, 39.99), DAO.readItem(ID));
 	}
-
+	
 	@Test
 	public void testUpdate() {
-		final Customer updated = new Customer(1L, "harry", "potter");
+		final Item updated = new Item(1L,"FIFA", 20L, 69.99);
 		assertEquals(updated, DAO.update(updated));
-
 	}
-
+	
 	@Test
 	public void testDelete() {
 		assertEquals(1, DAO.delete(1));
