@@ -27,6 +27,10 @@ public class OrderDAO implements Dao<Order> {
 		this.customerDAO = customerDAO;
 	}
 
+	public OrderDAO() {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long order_id = resultSet.getLong("id");
