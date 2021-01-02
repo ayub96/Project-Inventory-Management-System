@@ -9,10 +9,6 @@ import com.qa.ims.persistence.dao.CustomerDAO;
 import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.utils.Utils;
 
-/**
- * Takes in customer details for CRUD functionality
- *
- */
 public class CustomerController implements CrudController<Customer> {
 
 	public static final Logger LOGGER = LogManager.getLogger();
@@ -26,11 +22,9 @@ public class CustomerController implements CrudController<Customer> {
 		this.utils = utils;
 	}
 
-	/**
-	 * Reads all customers to the logger
-	 */
 	@Override
 	public List<Customer> readAll() {
+		LOGGER.info("");
 		List<Customer> customers = customerDAO.readAll();
 		for (Customer customer : customers) {
 			LOGGER.info(customer.toString());
@@ -38,44 +32,35 @@ public class CustomerController implements CrudController<Customer> {
 		return customers;
 	}
 
-	/**
-	 * Creates a customer by taking in user input
-	 */
 	@Override
 	public Customer create() {
-		LOGGER.info("Please enter a first name");
+		LOGGER.info("\nPlease enter a first name");
 		String firstName = utils.getString();
-		LOGGER.info("Please enter a surname");
+		LOGGER.info("\nPlease enter a surname");
 		String surname = utils.getString();
 		Customer customer = customerDAO.create(new Customer(firstName, surname));
-		LOGGER.info("Customer created");
+		LOGGER.info("\nCustomer created");
 		return customer;
 	}
 
-	/**
-	 * Updates an existing customer by taking in user input
-	 */
 	@Override
 	public Customer update() {
-		LOGGER.info("Please enter the id of the customer you would like to update");
+		readAll();
+		LOGGER.info("\nPlease enter the id of the customer you would like to update");
 		Long id = utils.getLong();
-		LOGGER.info("Please enter a first name");
+		LOGGER.info("\nPlease enter a first name");
 		String firstName = utils.getString();
-		LOGGER.info("Please enter a surname");
+		LOGGER.info("\nPlease enter a surname");
 		String surname = utils.getString();
 		Customer customer = customerDAO.update(new Customer(id, firstName, surname));
-		LOGGER.info("Customer Updated");
+		LOGGER.info("\nCustomer Updated");
 		return customer;
 	}
 
-	/**
-	 * Deletes an existing customer by the id of the customer
-	 * 
-	 * @return
-	 */
 	@Override
 	public int delete() {
-		LOGGER.info("Please enter the customer id (NOTE: A customer may not be deleted if contained within an order):");
+		readAll();
+		LOGGER.info("\nPlease enter the customer id (NOTE: A customer may not be deleted if contained within an order):");
 		Long id = utils.getLong();
 		return customerDAO.delete(id);
 	}

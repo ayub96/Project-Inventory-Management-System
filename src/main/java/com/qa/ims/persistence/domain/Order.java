@@ -1,6 +1,5 @@
 package com.qa.ims.persistence.domain;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,9 +8,7 @@ public class Order {
 	private Long order_id;
 	private Long customer_id;
 	private Long item_id;
-	private String date;
 	private List<Item> items = new ArrayList<>();
-	private List<Customer> customers = new ArrayList<>();
 	
 	public Order() {
 
@@ -28,13 +25,11 @@ public class Order {
 		
 	}
 	
-	public Order(Long order_id, Long customer_id, List<Item> items, String date, List<Customer> customers) {	//super here?
+	public Order(Long order_id, Long customer_id, List<Item> items) {	//super here?
 		super();
-		this.date = date;
 		this.order_id = order_id;
 		this.customer_id = customer_id;
 		this.items = items;
-		this.customers = customers;
 	}
 	
 	public Long getOrder_id() {
@@ -58,18 +53,12 @@ public class Order {
 	public String toString() {
 		double total = 0.0;
 		String myItems = "";
-		String myCustomers = "";
 		for(Item item : items) {
 			total = total + item.getPrice();
 			myItems = myItems + item.toOrderString() + "\n";
 		}
-		for(Customer customer : customers) {
-			myCustomers = myCustomers + customer.toOrderString();
-		}
 		return "[order ID]: " + order_id 
 				+ "\n [customer ID]: " + customer_id
-				+ "\n [customer name]: " + myCustomers
-				+ "\n [Last updated]: " + date 
 				+ "\n [items]:\n" + myItems 
 				+ " [Total]: £" + total;
 	}
@@ -81,21 +70,36 @@ public class Order {
 	public void setItem_id(Long item_id) {
 		this.item_id = item_id;
 	}
-
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-
-	public List<Customer> getCustomers() {
-		return customers;
-	}
-
-	public void setCustomers(List<Customer> customers) {
-		this.customers = customers;
-	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Order other = (Order) obj;
+		if (items == null) {
+			if (other.items != null)
+				return false;
+		} else if (!items.equals(other.items))
+			return false;
+		if (order_id == null) {
+			if (other.order_id != null)
+				return false;
+		} else if (!order_id.equals(other.order_id))
+			return false;
+		if (customer_id == null) {
+			if (other.customer_id != null)
+				return false;
+		} else if (!customer_id.equals(other.customer_id))
+			return false;
+		if (item_id == null) {
+			if (other.item_id != null)
+				return false;
+		} else if (!item_id.equals(other.item_id))
+			return false;
+		return true;
+	}
 }
