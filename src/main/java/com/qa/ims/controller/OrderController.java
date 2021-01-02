@@ -61,7 +61,7 @@ public class OrderController implements CrudController<Order> {
 		update();
 		return order;
 	}
-
+	
 	@Override
 	public Order update() {
 		Long order_id = 0L;
@@ -104,8 +104,28 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public int delete() {
-		LOGGER.info("\nPlease enter the id of the order you would like to delete:");
+		LOGGER.info("\nDelete order (1)\nDelete item (2)");
+		Long response = utils.getLong();
+		if(response==1L) {
+			LOGGER.info("\nPlease enter the id of the order you would like to delete:");
+			Long order_id = utils.getLong();
+			return orderDAO.delete(order_id);
+		}else if(response==2L) {
+			deleteItem();
+		}else {
+			LOGGER.info("\nInvalid selection");
+		}
+		return 0;
+	}
+	
+	public int deleteItem() {
+		readAll();
+		LOGGER.info("\nPlease enter the order ID:");
 		Long order_id = utils.getLong();
-		return orderDAO.delete(order_id);
+		itemController.readAll();
+		LOGGER.info("\nPlease enter the item ID:");
+		Long item_id = utils.getLong();
+		orderDAO.deleteItem(order_id, item_id);
+		return 0;
 	}
 }
