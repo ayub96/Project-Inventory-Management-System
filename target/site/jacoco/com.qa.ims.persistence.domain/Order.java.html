@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Order.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ims</a> &gt; <a href="index.source.html" class="el_package">com.qa.ims.persistence.domain</a> &gt; <span class="el_source">Order.java</span></div><h1>Order.java</h1><pre class="source lang-java linenums">package com.qa.ims.persistence.domain;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Order {
+
+	private Long order_id;
+	private Long customer_id;
+	private Long item_id;
+<span class="fc" id="L11">	private List&lt;Item&gt; items = new ArrayList&lt;&gt;();</span>
+	
+<span class="fc" id="L13">	public Order() {</span>
+
+<span class="fc" id="L15">	}</span>
+	
+<span class="fc" id="L17">	public Order(Long customer_id) {</span>
+<span class="fc" id="L18">		this.customer_id = customer_id;</span>
+<span class="fc" id="L19">	}</span>
+	
+	public Order(Long order_id, Long customer_id) {	//super here?
+<span class="fc" id="L22">		super();</span>
+<span class="fc" id="L23">		this.order_id = order_id;</span>
+<span class="fc" id="L24">		this.customer_id = customer_id;</span>
+		
+<span class="fc" id="L26">	}</span>
+	
+	public Order(Long order_id, Long customer_id, List&lt;Item&gt; items) {	//super here?
+<span class="fc" id="L29">		super();</span>
+<span class="fc" id="L30">		this.order_id = order_id;</span>
+<span class="fc" id="L31">		this.customer_id = customer_id;</span>
+<span class="fc" id="L32">		this.items = items;</span>
+<span class="fc" id="L33">	}</span>
+	
+	public Long getOrder_id() {
+<span class="fc" id="L36">		return order_id;</span>
+	}
+
+	public void setOrder_id(Long order_id) {
+<span class="nc" id="L40">		this.order_id = order_id;</span>
+<span class="nc" id="L41">	}</span>
+
+	public Long getCustomer_id() {
+<span class="fc" id="L44">		return customer_id;</span>
+	}
+
+	public void setCustomer_id(Long customer_id) {
+<span class="nc" id="L48">		this.customer_id = customer_id;</span>
+<span class="nc" id="L49">	}</span>
+
+	
+	@Override
+	public String toString() {
+<span class="nc" id="L54">		double total = 0.0;</span>
+<span class="nc" id="L55">		String myItems = &quot;&quot;;</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">		for(Item item : items) {</span>
+<span class="nc" id="L57">			total = total + item.getPrice();</span>
+<span class="nc" id="L58">			myItems = myItems + item.toOrderString() + &quot;\n&quot;;</span>
+<span class="nc" id="L59">		}</span>
+<span class="nc" id="L60">		return &quot;[order ID]: &quot; + order_id </span>
+				+ &quot;\n [customer ID]: &quot; + customer_id
+				+ &quot;\n [items]:\n&quot; + myItems 
+				+ &quot; [Total]: �&quot; + total;
+	}
+
+	public Long getItem_id() {
+<span class="nc" id="L67">		return item_id;</span>
+	}
+
+	public void setItem_id(Long item_id) {
+<span class="nc" id="L71">		this.item_id = item_id;</span>
+<span class="nc" id="L72">	}</span>
+	
+	@Override
+	public boolean equals(Object obj) {
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (this == obj)</span>
+<span class="nc" id="L77">			return true;</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (obj == null)</span>
+<span class="nc" id="L79">			return false;</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (getClass() != obj.getClass())</span>
+<span class="nc" id="L81">			return false;</span>
+<span class="fc" id="L82">		Order other = (Order) obj;</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (items == null) {</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">			if (other.items != null)</span>
+<span class="nc" id="L85">				return false;</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		} else if (!items.equals(other.items))</span>
+<span class="nc" id="L87">			return false;</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (order_id == null) {</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			if (other.order_id != null)</span>
+<span class="nc" id="L90">				return false;</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		} else if (!order_id.equals(other.order_id))</span>
+<span class="nc" id="L92">			return false;</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (customer_id == null) {</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">			if (other.customer_id != null)</span>
+<span class="nc" id="L95">				return false;</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		} else if (!customer_id.equals(other.customer_id))</span>
+<span class="nc" id="L97">			return false;</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (item_id == null) {</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">			if (other.item_id != null)</span>
+<span class="nc" id="L100">				return false;</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		} else if (!item_id.equals(other.item_id))</span>
+<span class="nc" id="L102">			return false;</span>
+<span class="fc" id="L103">		return true;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
