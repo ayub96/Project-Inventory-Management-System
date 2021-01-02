@@ -4,20 +4,36 @@ public class Item {
 
 	private Long id;
 	private String itemName;
-	private int quantity;
+	private Long quantity;
 	private double price;
 	
-	public Item(String itemName, int quantity, double price) {
+	public Item(Long id, String itemName, Long quantity, double price) {
+		super();
+		this.id = id;
 		this.itemName = itemName;
 		this.quantity = quantity;
 		this.price = price;
 	}
 	
-	public Item(Long id, String itemName, int quantity, double price) {
-		this.id = id;
+	public Item(String itemName, Long quantity, double price) {
+		super();
 		this.itemName = itemName;
 		this.quantity = quantity;
 		this.price = price;
+	}
+	
+	public Item(String itemName, double price) {
+		super();
+		this.itemName = itemName;
+		this.price = price;
+	}
+
+	public Item(Long id) {
+		this.id = id;
+	}
+	
+	public Item() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public Long getId() {
@@ -36,11 +52,11 @@ public class Item {
 		this.itemName = itemName;
 	}
 
-	public int getQuantity() {
+	public Long getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(Long quantity) {
 		this.quantity = quantity;
 	}
 
@@ -54,7 +70,11 @@ public class Item {
 	
 	@Override
 	public String toString() {
-		return "id:" + id + " item name:" + itemName + " quantity:" + quantity + " price:" + price;
+		return "{id: " + id + "\tname: " + itemName + "\tprice: " + price + "\tstock: " + quantity + "}";
+	}
+	
+	public String toOrderString() {
+		return "  {id: " + id + "\tname: " + itemName + "\tprice: " + price + "}";
 	}
 	
 	@Override

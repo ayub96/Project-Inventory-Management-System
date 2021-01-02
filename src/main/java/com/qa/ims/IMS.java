@@ -6,7 +6,11 @@ import org.apache.logging.log4j.Logger;
 import com.qa.ims.controller.Action;
 import com.qa.ims.controller.CrudController;
 import com.qa.ims.controller.CustomerController;
+import com.qa.ims.controller.ItemController;
+import com.qa.ims.controller.OrderController;
 import com.qa.ims.persistence.dao.CustomerDAO;
+import com.qa.ims.persistence.dao.ItemDAO;
+import com.qa.ims.persistence.dao.OrderDAO;
 import com.qa.ims.persistence.domain.Domain;
 import com.qa.ims.utils.DBUtils;
 import com.qa.ims.utils.Utils;
@@ -16,23 +20,30 @@ public class IMS {
 	public static final Logger LOGGER = LogManager.getLogger();		// Logger for outputs
 
 	private final CustomerController customers;
+	private final OrderController orders;
+	private final ItemController items;
 	private final Utils utils;
 
 	public IMS() {
 		this.utils = new Utils();									// initialise the other classes we will need to use
 		final CustomerDAO custDAO = new CustomerDAO();				// a value can be assigned to a final variable only ONE time, WHY IS CustomerDAO publicly instantiated and not privately?
 		this.customers = new CustomerController(custDAO, utils);
+		final ItemDAO itemDAO = new ItemDAO();
+		this.items = new ItemController(itemDAO, utils);
+		final OrderDAO orderDAO = new OrderDAO(itemDAO);
+		this.orders = new OrderController(orderDAO, itemDAO, custDAO, items, utils);
 	}	
+	
 	public void imsSystem() {
 		LOGGER.info("What is your username");
 		String username = utils.getString();
-		LOGGER.info("What is your password");
+		LOGGER.info("\nWhat is your password");
 		String password = utils.getString();
 
 		DBUtils.connect(username, password);
 		Domain domain = null;
 		do {
-			LOGGER.info("Which entity would you like to use?");
+			LOGGER.info("\nWhich entity would you like to use?");
 			Domain.printDomains();
 
 			domain = Domain.getDomain(utils);
@@ -45,10 +56,10 @@ public class IMS {
 					active = this.customers;
 					break;
 				case ITEM:
-					active = null;
+					active = this.items;
 					break;
 				case ORDER:
-					active = null;
+					active = this.orders;
 					break;
 				case STOP:
 					return;
@@ -56,7 +67,7 @@ public class IMS {
 					break;
 				}
 
-				LOGGER.info("What would you like to do with " + domain.name().toLowerCase() + ":");
+				LOGGER.info("\nWhat would you like to do with " + domain.name().toLowerCase() + ":");
 
 				Action.printActions();
 				Action action = Action.getAction(utils);

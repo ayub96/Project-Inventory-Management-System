@@ -15,44 +15,49 @@ import com.qa.ims.utils.DBUtils;
 public class CustomerDAOTest {
 
 	private final CustomerDAO DAO = new CustomerDAO();
-
+	final Customer created1 = new Customer(1L,"chris", "perrins");
+	final Customer created2 = new Customer(2L,"jordan", "harrison");
+	
 	@BeforeClass
 	public static void init() {
-		DBUtils.connect("root", "pass");
+		DBUtils.connect("root", "root");
 	}
 
 	@Before
 	public void setup() {
 		DBUtils.getInstance().init("src/test/resources/sql-schema.sql", "src/test/resources/sql-data.sql");
+		DAO.create(created1);
+		DAO.create(created2);
 	}
 
 	@Test
 	public void testCreate() {
-		final Customer created = new Customer(2L, "chris", "perrins");
-		assertEquals(created, DAO.create(created));
+		final Customer created3 = new Customer(3L,"michael", "jackson");
+		assertEquals(created3, DAO.create(created3));
 	}
 
 	@Test
 	public void testReadAll() {
 		List<Customer> expected = new ArrayList<>();
-		expected.add(new Customer(1L, "jordan", "harrison"));
+		expected.add(new Customer(1L, "chris", "perrins"));
+		expected.add(new Customer(2L, "jordan", "harrison"));
 		assertEquals(expected, DAO.readAll());
 	}
 
 	@Test
 	public void testReadLatest() {
-		assertEquals(new Customer(1L, "jordan", "harrison"), DAO.readLatest());
+		assertEquals(new Customer(2L, "jordan", "harrison"), DAO.readLatest());
 	}
 
 	@Test
 	public void testRead() {
-		final long ID = 1L;
+		final long ID = 2L;
 		assertEquals(new Customer(ID, "jordan", "harrison"), DAO.readCustomer(ID));
 	}
 
 	@Test
 	public void testUpdate() {
-		final Customer updated = new Customer(1L, "chris", "perrins");
+		final Customer updated = new Customer(1L, "harry", "potter");
 		assertEquals(updated, DAO.update(updated));
 
 	}

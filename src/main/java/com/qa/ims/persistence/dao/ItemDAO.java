@@ -6,11 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.utils.DBUtils;
 
@@ -23,8 +20,8 @@ public class ItemDAO implements Dao<Item> {
 	@Override
 	public Item modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("id");
-		String itemName = resultSet.getString("item_name");
-		int quantity = resultSet.getInt("quantity");
+		String itemName = resultSet.getString("name");
+		Long quantity = resultSet.getLong("quantity");
 		double price = resultSet.getDouble("price");
 		return new Item(id, itemName, quantity, price);
 	}
@@ -35,7 +32,7 @@ public class ItemDAO implements Dao<Item> {
 	public List<Item> readAll(){
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("select * from customers");) {
+				ResultSet resultSet = statement.executeQuery("select * from items");) {
 			List<Item> items = new ArrayList<>();
 			while (resultSet.next()) {
 				items.add(modelFromResultSet(resultSet));
@@ -49,7 +46,7 @@ public class ItemDAO implements Dao<Item> {
 	};
 
 	// READS OUT THE LATEST ITEM FROM THE DATABASE
-	
+
 	public Item readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
@@ -66,7 +63,7 @@ public class ItemDAO implements Dao<Item> {
 	public Item create(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("INSERT INTO items(item_name, quantity, price) values('" + item.getItemName()
+			statement.executeUpdate("INSERT INTO items(name, quantity, price) values('" + item.getItemName()
 					+ "','" + item.getQuantity() + "','" + item.getPrice() + "')");
 			return readLatest();
 		} catch (Exception e) {
@@ -93,7 +90,7 @@ public class ItemDAO implements Dao<Item> {
 	public Item update(Item item) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("update items set item_name ='" + item.getItemName() + "', quantity ='"
+			statement.executeUpdate("update items set name ='" + item.getItemName() + "', quantity ='"
 					+ item.getQuantity() + "', price ='" + item.getPrice() + "' where id =" + item.getId());
 			return readItem(item.getId());
 		} catch (Exception e) {
@@ -103,8 +100,20 @@ public class ItemDAO implements Dao<Item> {
 		return null;
 	}
 
+	public int deleteOrderline(long id) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+			return statement.executeUpdate("delete from orderline where fk_item_id = " + id);
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return 0;
+	}
+	
 	@Override
 	public int delete(long id) {
+		deleteOrderline(id);
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
 			return statement.executeUpdate("delete from items where id = " + id);

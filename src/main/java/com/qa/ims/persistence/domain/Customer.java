@@ -5,7 +5,7 @@ public class Customer {
 	private Long id;
 	private String firstName;
 	private String surname;
-
+	
 	public Customer(String firstName, String surname) {
 		this.firstName = firstName;
 		this.surname = surname;
@@ -43,7 +43,11 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "id:" + id + " first name:" + firstName + " surname:" + surname;
+		return "[customer id]: " + id + "\t[first name]: " + firstName + "\t[surname]: " + surname;
+	}
+	
+	public String toOrderString() {
+		return firstName + " " + surname;
 	}
 
 	@Override
