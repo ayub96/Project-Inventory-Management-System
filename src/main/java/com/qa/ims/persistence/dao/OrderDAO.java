@@ -160,5 +160,14 @@ public class OrderDAO implements Dao<Order> {
 		return 0;
 	}
 
-
+	public int deleteItem(Long order_id, Long item_id) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+			return statement.executeUpdate("DELETE FROM orderline WHERE fk_item_id = " + item_id + " AND fk_order_id = " + order_id);
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return 0;
+	}
 }
