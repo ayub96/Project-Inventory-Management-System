@@ -8,6 +8,7 @@ calculate the cost of an order. A functionality has been added such that a user 
 
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+
 	1. Download the latest version of Java
 	2. Ensure you have access to a command line interface
 
