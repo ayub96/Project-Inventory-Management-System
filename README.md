@@ -1,9 +1,11 @@
-Coverage: 34%
-# Project Title
+Coverage: 68.8%
+IMS Project
 
-One Paragraph of project description goes here
+The following project implements an Inventory Management System which utilises MySQL and Java. A user may create/read/update/delete (CRUD) customers/items/orders in the system. In addition, a user may
+calculate the cost of an order. A functionality has been added such that a user cannot add a quantity of items to an order if it exceeds the item's stock.
 
 ## Getting Started
+
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
