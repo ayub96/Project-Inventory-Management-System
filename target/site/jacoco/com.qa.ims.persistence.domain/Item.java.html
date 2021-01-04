@@ -22,51 +22,51 @@ public class Item {
 <span class="fc" id="L22">		this.price = price;</span>
 <span class="fc" id="L23">	}</span>
 	
-	public Item(String itemName, double price) {
-<span class="nc" id="L26">		super();</span>
-<span class="nc" id="L27">		this.itemName = itemName;</span>
-<span class="nc" id="L28">		this.price = price;</span>
-<span class="nc" id="L29">	}</span>
-
-<span class="nc" id="L31">	public Item(Long id) {</span>
-<span class="nc" id="L32">		this.id = id;</span>
-<span class="nc" id="L33">	}</span>
-	
-<span class="nc" id="L35">	public Item() {</span>
-		// TODO Auto-generated constructor stub
-<span class="nc" id="L37">	}</span>
+//	public Item(String itemName, double price) {
+//		super();
+//		this.itemName = itemName;
+//		this.price = price;
+//	}
+//
+//	public Item(Long id) {
+//		this.id = id;
+//	}
+//	
+//	public Item() {
+//		// TODO Auto-generated constructor stub
+//	}
 
 	public Long getId() {
 <span class="fc" id="L40">		return id;</span>
 	}
 
 	public void setId(Long id) {
-<span class="nc" id="L44">		this.id = id;</span>
-<span class="nc" id="L45">	}</span>
+<span class="fc" id="L44">		this.id = id;</span>
+<span class="fc" id="L45">	}</span>
 
 	public String getItemName() {
 <span class="fc" id="L48">		return itemName;</span>
 	}
 
 	public void setItemName(String itemName) {
-<span class="nc" id="L52">		this.itemName = itemName;</span>
-<span class="nc" id="L53">	}</span>
+<span class="fc" id="L52">		this.itemName = itemName;</span>
+<span class="fc" id="L53">	}</span>
 
 	public Long getQuantity() {
 <span class="fc" id="L56">		return quantity;</span>
 	}
 
 	public void setQuantity(Long quantity) {
-<span class="nc" id="L60">		this.quantity = quantity;</span>
-<span class="nc" id="L61">	}</span>
+<span class="fc" id="L60">		this.quantity = quantity;</span>
+<span class="fc" id="L61">	}</span>
 
 	public double getPrice() {
 <span class="fc" id="L64">		return price;</span>
 	}
 
 	public void setPrice(double price) {
-<span class="nc" id="L68">		this.price = price;</span>
-<span class="nc" id="L69">	}</span>
+<span class="fc" id="L68">		this.price = price;</span>
+<span class="fc" id="L69">	}</span>
 	
 	@Override
 	public String toString() {
@@ -74,7 +74,7 @@ public class Item {
 	}
 	
 	public String toOrderString() {
-<span class="nc" id="L77">		return &quot;  {id: &quot; + id + &quot;\tname: &quot; + itemName + &quot;\tprice: &quot; + price + &quot;}&quot;;</span>
+<span class="fc" id="L77">		return &quot;  {id: &quot; + id + &quot;\tname: &quot; + itemName + &quot;\tprice: &quot; + price + &quot;}&quot;;</span>
 	}
 	
 	@Override
@@ -94,8 +94,8 @@ public class Item {
 <span class="fc bfc" id="L94" title="All 2 branches covered.">		if (id == null) {</span>
 <span class="pc bpc" id="L95" title="1 of 2 branches missed.">			if (other.id != null)</span>
 <span class="nc" id="L96">				return false;</span>
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		} else if (!id.equals(other.id))</span>
-<span class="nc" id="L98">			return false;</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		} else if (!id.equals(other.id))</span>
+<span class="fc" id="L98">			return false;</span>
 <span class="fc" id="L99">		return true;</span>
 	}
 

@@ -37,39 +37,39 @@ public class Order {
 	}
 
 	public void setOrder_id(Long order_id) {
-<span class="nc" id="L40">		this.order_id = order_id;</span>
-<span class="nc" id="L41">	}</span>
+<span class="fc" id="L40">		this.order_id = order_id;</span>
+<span class="fc" id="L41">	}</span>
 
 	public Long getCustomer_id() {
 <span class="fc" id="L44">		return customer_id;</span>
 	}
 
 	public void setCustomer_id(Long customer_id) {
-<span class="nc" id="L48">		this.customer_id = customer_id;</span>
-<span class="nc" id="L49">	}</span>
+<span class="fc" id="L48">		this.customer_id = customer_id;</span>
+<span class="fc" id="L49">	}</span>
 
 	
 	@Override
 	public String toString() {
-<span class="nc" id="L54">		double total = 0.0;</span>
-<span class="nc" id="L55">		String myItems = &quot;&quot;;</span>
-<span class="nc bnc" id="L56" title="All 2 branches missed.">		for(Item item : items) {</span>
-<span class="nc" id="L57">			total = total + item.getPrice();</span>
-<span class="nc" id="L58">			myItems = myItems + item.toOrderString() + &quot;\n&quot;;</span>
-<span class="nc" id="L59">		}</span>
-<span class="nc" id="L60">		return &quot;[order ID]: &quot; + order_id </span>
+<span class="fc" id="L54">		double total = 0.0;</span>
+<span class="fc" id="L55">		String myItems = &quot;&quot;;</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		for(Item item : items) {</span>
+<span class="fc" id="L57">			total = total + item.getPrice();</span>
+<span class="fc" id="L58">			myItems = myItems + item.toOrderString() + &quot;\n&quot;;</span>
+<span class="fc" id="L59">		}</span>
+<span class="fc" id="L60">		return &quot;[order ID]: &quot; + order_id </span>
 				+ &quot;\n [customer ID]: &quot; + customer_id
 				+ &quot;\n [items]:\n&quot; + myItems 
 				+ &quot; [Total]: �&quot; + total;
 	}
 
-	public Long getItem_id() {
-<span class="nc" id="L67">		return item_id;</span>
-	}
-
-	public void setItem_id(Long item_id) {
-<span class="nc" id="L71">		this.item_id = item_id;</span>
-<span class="nc" id="L72">	}</span>
+//	public Long getItem_id() {
+//		return item_id;
+//	}
+//
+//	public void setItem_id(Long item_id) {
+//		this.item_id = item_id;
+//	}
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -85,16 +85,16 @@ public class Order {
 <span class="nc" id="L85">				return false;</span>
 <span class="pc bpc" id="L86" title="1 of 2 branches missed.">		} else if (!items.equals(other.items))</span>
 <span class="nc" id="L87">			return false;</span>
-<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (order_id == null) {</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">			if (other.order_id != null)</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (order_id == null) {</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">			if (other.order_id != null)</span>
 <span class="nc" id="L90">				return false;</span>
 <span class="pc bpc" id="L91" title="1 of 2 branches missed.">		} else if (!order_id.equals(other.order_id))</span>
 <span class="nc" id="L92">			return false;</span>
 <span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (customer_id == null) {</span>
 <span class="nc bnc" id="L94" title="All 2 branches missed.">			if (other.customer_id != null)</span>
 <span class="nc" id="L95">				return false;</span>
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		} else if (!customer_id.equals(other.customer_id))</span>
-<span class="nc" id="L97">			return false;</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		} else if (!customer_id.equals(other.customer_id))</span>
+<span class="fc" id="L97">			return false;</span>
 <span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (item_id == null) {</span>
 <span class="pc bpc" id="L99" title="1 of 2 branches missed.">			if (other.item_id != null)</span>
 <span class="nc" id="L100">				return false;</span>

@@ -22,19 +22,19 @@ public class Item {
 		this.price = price;
 	}
 	
-	public Item(String itemName, double price) {
-		super();
-		this.itemName = itemName;
-		this.price = price;
-	}
-
-	public Item(Long id) {
-		this.id = id;
-	}
-	
-	public Item() {
-		// TODO Auto-generated constructor stub
-	}
+//	public Item(String itemName, double price) {
+//		super();
+//		this.itemName = itemName;
+//		this.price = price;
+//	}
+//
+//	public Item(Long id) {
+//		this.id = id;
+//	}
+//	
+//	public Item() {
+//		// TODO Auto-generated constructor stub
+//	}
 
 	public Long getId() {
 		return id;

@@ -15,23 +15,23 @@ import com.qa.ims.utils.Utils;
 
 public class OrderController implements CrudController&lt;Order&gt; {
 
-<span class="nc" id="L18">	public static final Logger LOGGER = LogManager.getLogger();</span>
+<span class="fc" id="L18">	public static final Logger LOGGER = LogManager.getLogger();</span>
 	
 	private OrderDAO orderDAO;
 	private CustomerDAO custDAO;
 	private ItemDAO itemDAO;
 	private Utils utils;
 	private ItemController itemController;
-<span class="nc" id="L25">	boolean newOrder = false;</span>
+<span class="fc" id="L25">	boolean newOrder = false;</span>
 	
 	public OrderController(OrderDAO orderDAO, ItemDAO itemDAO, CustomerDAO custDAO, ItemController itemController, Utils utils) {
-<span class="nc" id="L28">		super();</span>
-<span class="nc" id="L29">		this.itemController = itemController;</span>
-<span class="nc" id="L30">		this.itemDAO = itemDAO;</span>
-<span class="nc" id="L31">		this.custDAO = custDAO;</span>
-<span class="nc" id="L32">		this.orderDAO = orderDAO;</span>
-<span class="nc" id="L33">		this.utils = utils;</span>
-<span class="nc" id="L34">	}</span>
+<span class="fc" id="L28">		super();</span>
+<span class="fc" id="L29">		this.itemController = itemController;</span>
+<span class="fc" id="L30">		this.itemDAO = itemDAO;</span>
+<span class="fc" id="L31">		this.custDAO = custDAO;</span>
+<span class="fc" id="L32">		this.orderDAO = orderDAO;</span>
+<span class="fc" id="L33">		this.utils = utils;</span>
+<span class="fc" id="L34">	}</span>
 
 	public List&lt;Customer&gt; readCustomers() {
 <span class="nc" id="L37">		LOGGER.info(&quot;&quot;);</span>
@@ -61,7 +61,7 @@ public class OrderController implements CrudController&lt;Order&gt; {
 <span class="nc" id="L61">		update();</span>
 <span class="nc" id="L62">		return order;</span>
 	}
-
+	
 	@Override
 	public Order update() {
 <span class="nc" id="L67">		Long order_id = 0L;</span>
@@ -104,9 +104,29 @@ public class OrderController implements CrudController&lt;Order&gt; {
 
 	@Override
 	public int delete() {
-<span class="nc" id="L107">		LOGGER.info(&quot;\nPlease enter the id of the order you would like to delete:&quot;);</span>
-<span class="nc" id="L108">		Long order_id = utils.getLong();</span>
-<span class="nc" id="L109">		return orderDAO.delete(order_id);</span>
+<span class="nc" id="L107">		LOGGER.info(&quot;\nDelete order (1)\nDelete item (2)&quot;);</span>
+<span class="nc" id="L108">		Long response = utils.getLong();</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		if(response==1L) {</span>
+<span class="nc" id="L110">			LOGGER.info(&quot;\nPlease enter the id of the order you would like to delete:&quot;);</span>
+<span class="nc" id="L111">			Long order_id = utils.getLong();</span>
+<span class="nc" id="L112">			return orderDAO.delete(order_id);</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		}else if(response==2L) {</span>
+<span class="nc" id="L114">			deleteItem();</span>
+		}else {
+<span class="nc" id="L116">			LOGGER.info(&quot;\nInvalid selection&quot;);</span>
+		}
+<span class="nc" id="L118">		return 0;</span>
+	}
+	
+	public int deleteItem() {
+<span class="nc" id="L122">		readAll();</span>
+<span class="nc" id="L123">		LOGGER.info(&quot;\nPlease enter the order ID:&quot;);</span>
+<span class="nc" id="L124">		Long order_id = utils.getLong();</span>
+<span class="nc" id="L125">		itemController.readAll();</span>
+<span class="nc" id="L126">		LOGGER.info(&quot;\nPlease enter the item ID:&quot;);</span>
+<span class="nc" id="L127">		Long item_id = utils.getLong();</span>
+<span class="nc" id="L128">		orderDAO.deleteItem(order_id, item_id);</span>
+<span class="nc" id="L129">		return 0;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
