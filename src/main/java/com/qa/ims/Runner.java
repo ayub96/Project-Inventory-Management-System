@@ -11,6 +11,11 @@ public class Runner {
 		IMS ims = new IMS();		// create a new IMS instance - but what is IMS?
 		ims.imsSystem();			// Call imsSystem, our first method!
 		LOGGER.info("SO LONG!");	// Main has run
+		has_run();
 	}
 
+	public static boolean has_run() {
+		return true;
+	}
+	
 }

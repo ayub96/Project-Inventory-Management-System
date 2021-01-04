@@ -44,33 +44,65 @@ Fork the repository to your PC. The JUnit tests may then be run using an IDE suc
 Unit tests are used to check that the Data Access Objects (DAOs) function correctly. This is done via the assertEquals() method which checks
 whether the DAO has returned what we expect.
 
+The Unit tests can be found in the folder:
+
 ```
-	@Test
-	public void testReadAll() {
-		List<Item> expected = new ArrayList<>();
-		expected.add(new Item(1L,"GTA", 50L, 29.99));
-		expected.add(new Item(2L,"PUBG", 60L, 39.99));
-		assertEquals(expected, DAO.readAll());
-	}
+\Ayub-IMS-main\src\test\java\com\qa\ims\persistence\dao
+```
+
+The following Unit tests are available:
+
+```
+CustomerDAOTest.java
+ItemDAOTest.java
+OrderDAOTest.java
+```
+
+Below is an example of a test implemented in OrderDAOTest:
+
+```
+@Test
+public void testReadAll() {
+	List<Item> expected = new ArrayList<>();
+	expected.add(new Item(1L,"GTA", 50L, 29.99));
+	expected.add(new Item(2L,"PUBG", 60L, 39.99));
+	assertEquals(expected, DAO.readAll());
+}
 ```
 
 ### Integration Tests 
 Integration tests are used to confirm that objects function correctly
 
+The Unit tests can be found in the folder:
+
 ```
-	@Test
-	public void testCreate() {
-		final String F_NAME = "barry", L_NAME = "scott";
-		final Customer created = new Customer(F_NAME, L_NAME);
+\Ayub-IMS-main\src\test\java\com\qa\ims\controllers
+```
 
-		Mockito.when(utils.getString()).thenReturn(F_NAME, L_NAME);
-		Mockito.when(dao.create(created)).thenReturn(created);
+The following Unit tests are available:
 
-		assertEquals(created, controller.create());
+```
+CustomerControllerTest.java
+ItemControllerTest.java
+OrderControllerTest.java
+```
 
-		Mockito.verify(utils, Mockito.times(2)).getString();
-		Mockito.verify(dao, Mockito.times(1)).create(created);
-	}
+Below is an example of a test implemented in CustomerControllerTest:
+
+```
+@Test
+public void testCreate() {
+	final String F_NAME = "barry", L_NAME = "scott";
+	final Customer created = new Customer(F_NAME, L_NAME);
+
+	Mockito.when(utils.getString()).thenReturn(F_NAME, L_NAME);
+	Mockito.when(dao.create(created)).thenReturn(created);
+
+	assertEquals(created, controller.create());
+
+	Mockito.verify(utils, Mockito.times(2)).getString();
+	Mockito.verify(dao, Mockito.times(1)).create(created);
+}
 ```
 
 ## Built With

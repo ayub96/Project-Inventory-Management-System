@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="8" failures="0" name="com.qa.ims.persistence.dao.OrderDAOTest" time="5.027" errors="0" skipped="0">
+<testsuite tests="8" failures="0" name="com.qa.ims.persistence.dao.OrderDAOTest" time="5.809" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="14.0.1+7"/>
@@ -58,12 +58,12 @@
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testCreateOrderline" time="0.615"/>
-  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testReadLatest" time="0.848"/>
-  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testRead" time="0.571"/>
-  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testDeleteOrderline" time="0.611"/>
-  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testReadAll" time="0.621"/>
-  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testCreate" time="0.529"/>
-  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testDelete" time="0.619"/>
-  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testUpdate" time="0.613"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testCreateOrderline" time="0.61"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testReadLatest" time="0.858"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testRead" time="0.681"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testDeleteOrderline" time="0.642"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testReadAll" time="0.867"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testCreate" time="0.67"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testDelete" time="0.694"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testUpdate" time="0.787"/>
 </testsuite>

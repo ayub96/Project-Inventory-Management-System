@@ -46,7 +46,7 @@ public class CustomerController implements CrudController&lt;Customer&gt; {
 	@Override
 	public Customer update() {
 <span class="fc" id="L48">		readAll();</span>
-<span class="fc" id="L49">		LOGGER.info(&quot;\nPlease enter the id of the customer you would like to update&quot;);</span>
+<span class="fc" id="L49">		LOGGER.info(&quot;\nPlease enter the id of the customer you would like to update:&quot;);</span>
 <span class="fc" id="L50">		Long id = utils.getLong();</span>
 <span class="fc" id="L51">		LOGGER.info(&quot;\nPlease enter a first name&quot;);</span>
 <span class="fc" id="L52">		String firstName = utils.getString();</span>
