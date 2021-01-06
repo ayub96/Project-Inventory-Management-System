@@ -8,5 +8,3 @@ INSERT INTO `ims`.`items` (`name`, `quantity`, `price`) VALUES ('GTA', 54, 45.99
 INSERT INTO `ims`.`items` (`name`, `quantity`, `price`) VALUES ('PUBG', 74, 55.99);
 INSERT INTO `ims`.`items` (`name`, `quantity`, `price`) VALUES ('COD', 541, 49.99);
 INSERT INTO `ims`.`items` (`name`, `quantity`, `price`) VALUES ('GTA5', 67, 59.99);
-INSERT INTO `ims`.`items` (`name`, `quantity`, `price`) VALUES ('Dark Souls', 32, 49.99);
-INSERT INTO `ims`.`items` (`name`, `quantity`, `price`) VALUES ('PUBG', 98, 29.99);

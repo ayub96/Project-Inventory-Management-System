@@ -19,7 +19,7 @@ public class OrderDAOTest {
 
 	private final ItemDAO itemDAO = new ItemDAO();
 	private final CustomerDAO custDAO = new CustomerDAO();
-	private final OrderDAO DAO = new OrderDAO(itemDAO);
+	private final OrderDAO DAO = new OrderDAO();
 	final Order created1 = new Order(1L);
 	final Customer customer1 = new Customer(1L, "john", "smith");
 	final Customer customer2 = new Customer(2L, "ben", "johnson");
@@ -60,13 +60,6 @@ public class OrderDAOTest {
 		assertEquals(expected, DAO.readAll());
 	}
 	
-//	@Test
-//	public void testReadAllFAIL() {
-//		DAO.deleteOrderline(1L);
-//		DAO.delete(1L);
-//		assertNull(DAO.readAll());
-//	}
-	
 	@Test
 	public void testReadLatest() {
 		itemDAO.create(new Item(2L ,"Warcraft", 60L, 12.99));
@@ -99,6 +92,26 @@ public class OrderDAOTest {
 	}
 	
 	@Test
+	public void testReadAllCustomers() {
+		List<Customer> expected = new ArrayList<>();
+		expected.add(new Customer(1L, "john", "smith"));
+		assertEquals(expected, DAO.readAllCustomers());
+	}
+	
+	@Test
+	public void testReadAllItems() {
+		List<Item> expected = new ArrayList<>();
+		expected.add(new Item(1L, "GTA", 50L, 19.99));
+		assertEquals(expected, DAO.readAllItems());
+	}
+	
+	@Test
+	public void testUpdateItem() {
+		final Item updated = new Item(1L,"FIFA", 20L, 69.99);
+		assertEquals(updated, DAO.updateItem(updated));
+	}
+	
+	@Test
 	public void testUpdate() {
 		custDAO.create(customer2);
 		List<Item> items = new ArrayList<>();
@@ -107,19 +120,6 @@ public class OrderDAOTest {
 		Order expected = new Order(1L, 2L, items);
 		assertEquals(expected, DAO.update(updated));
 	}
-	
-//	@Test
-//	public void testUpdateFAIL() {
-//		Order updated = new Order(5L, 5L);
-//		assertNull(DAO.update(updated));
-//	}
-	
-//	@Test
-//	public void testReadOrderlineFAIL() {
-//		DAO.deleteOrderline(1L);
-//		DAO.delete(1L);
-//		assertNull(DAO.readOrderline(1L));
-//	}
 	
 	@Test
 	public void testCreateOrderline() {
@@ -131,19 +131,9 @@ public class OrderDAOTest {
 	}
 	
 	@Test
-	public void testCreateOrderlineFAIL() {
-		assertNull(DAO.createOrderline(2L, 2L));
-	}
-	
-	@Test
 	public void testDeleteOrderline() {
 		assertEquals(1, DAO.deleteOrderline(1));
 	}
-	
-//	@Test
-//	public void testDeleteOrderlineFAIL() {
-//		assertNull(DAO.deleteOrderline(2));
-//	}
 	
 	@Test
 	public void testDelete() {
@@ -151,19 +141,15 @@ public class OrderDAOTest {
 		assertEquals(1, DAO.delete(1));
 	}
 	
-//	@Test
-//	public void testDeleteFAIL() {
-//		assertNull(DAO.delete(2L));
-//	}
-	
 	@Test
 	public void testDeleteItem() {
 		assertEquals(1, DAO.deleteItem(1L, 1L));
 	}
 	
-//	@Test
-//	public void testDeleteItemFAIL() {
-//		assertNull(DAO.deleteItem(0L, 0L));
-//	}
+	@Test
+	public void testReadItem() {
+		final long ID = 1L;
+		assertEquals(new Item(1L ,"GTA", 50L, 19.99), DAO.readItem(ID));
+	}
 	
 }

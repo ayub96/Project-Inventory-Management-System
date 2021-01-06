@@ -49,5 +49,4 @@ public class CustomerTest {
 		String expected = customer.getFirstName() + " " + customer.getSurname();
 		assertEquals(expected, myCustomer);
 	}
-	
 }

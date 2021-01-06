@@ -51,21 +51,9 @@ public class ItemDAOTest {
 	}
 	
 	@Test
-	public void testReadLatestFAIL() {
-		DAO.delete(1L);
-		DAO.delete(2L);
-		assertNull(DAO.readLatest());
-	}
-	
-	@Test
 	public void testReadItem() {
 		final long ID = 2L;
 		assertEquals(new Item(2L,"PUBG", 60L, 39.99), DAO.readItem(ID));
-	}
-	
-	@Test
-	public void testReadItemFAIL() {
-		assertNull(DAO.readItem(5L));
 	}
 	
 	@Test
