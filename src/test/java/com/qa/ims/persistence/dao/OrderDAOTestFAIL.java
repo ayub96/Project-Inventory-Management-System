@@ -3,7 +3,9 @@ package com.qa.ims.persistence.dao;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -100,4 +102,12 @@ public class OrderDAOTestFAIL {
 		assertEquals(expected, DAO.readAll());
 	}
 	
+	@Test
+	public void testUpdateDateTimeFAIL() {
+		List<Item> items = new ArrayList<>();
+		items.add(new Item(1L ,"GTA", 50L, 19.99));
+		Order order = new Order(1L, 1L, "1984-01-01 00:00:00", items);
+		
+		assertNull(DAO.updateDateTime(order));
+	}
 }

@@ -45,9 +45,10 @@ public class OrderTest {
 		Item item = new Item(1L, "COD", 25L, 29.99);
 		items.add(item);
 		String myItem = item.toOrderString() + "\n";
-		Order order = new Order(2L, 1L, items);
+		Order order = new Order(2L, 1L, "1984-01-01 00:00:00", items);
 		String expected = "[order ID]: " + 2L 
 						+ "\n [customer ID]: " + 1L
+						+ "\n [last updated]: " + "1984-01-01 00:00:00"
 						+ "\n [items]:\n" + myItem 
 						+ " [Total]: " + 29.99;
 		assertEquals(expected, order.toString());
