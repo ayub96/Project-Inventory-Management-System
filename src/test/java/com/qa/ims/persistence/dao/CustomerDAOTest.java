@@ -44,23 +44,12 @@ public class CustomerDAOTest {
 		expected.add(new Customer(2L, "jordan", "harrison"));
 		assertEquals(expected, DAO.readAll());
 	}
-
-	@Test
-	public void testReadCustomerFAIL() {
-		assertNull(DAO.readCustomer(5L));
-	}
 	
 	@Test
 	public void testReadLatest() {
 		assertEquals(new Customer(2L, "jordan", "harrison"), DAO.readLatest());
 	}
-	
-	@Test
-	public void testReadLatestFAIL() {
-		DAO.delete(1L);
-		DAO.delete(2L);
-		assertNull(DAO.readLatest());
-	}
+
 
 	@Test
 	public void testRead() {

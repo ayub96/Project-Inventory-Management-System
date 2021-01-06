@@ -19,12 +19,6 @@ public class OrderDAO implements Dao<Order> {
 	
 	public static final Logger LOGGER = LogManager.getLogger();
 
-	private ItemDAO itemDAO;
-
-	public OrderDAO(ItemDAO itemDAO) {
-		this.itemDAO = itemDAO;
-	}
-
 	@Override
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long order_id = resultSet.getLong("id");
@@ -33,13 +27,28 @@ public class OrderDAO implements Dao<Order> {
 		return new Order(order_id, customer_id, items);
 	}
 	
+	public Item modelItemFromResultSet(ResultSet resultSet) throws SQLException {
+		Long id = resultSet.getLong("id");
+		String itemName = resultSet.getString("name");
+		Long quantity = resultSet.getLong("quantity");
+		double price = resultSet.getDouble("price");
+		return new Item(id, itemName, quantity, price);
+	}
+	
+	public Customer modelCustFromResultSet(ResultSet resultSet) throws SQLException {
+		Long id = resultSet.getLong("id");
+		String firstName = resultSet.getString("first_name");
+		String surname = resultSet.getString("surname");
+		return new Customer(id, firstName, surname);
+	}
+	
 	public List<Item> readOrderline(Long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM orderline where fk_order_id = " + id);) {
 			List<Item> items = new ArrayList<>();
 			while (resultSet.next()) {
-				items.add(itemDAO.readItem(resultSet.getLong("fk_item_id")));
+				items.add(readItem(resultSet.getLong("fk_item_id")));
 			}
 			return items;
 		} catch (SQLException e) {
@@ -47,6 +56,35 @@ public class OrderDAO implements Dao<Order> {
 			LOGGER.error(e.getMessage());
 		}
 		return null;
+	}
+	
+	public Item updateItem(Item item) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+			statement.executeUpdate("update items set name ='" + item.getItemName() + "', quantity ='"
+					+ item.getQuantity() + "', price ='" + item.getPrice() + "' where id =" + item.getId());
+			return readItem(item.getId());
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	}
+	
+	public List<Item> readAllItems(){
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("select * from items");) {
+			List<Item> items = new ArrayList<>();
+			while (resultSet.next()) {
+				items.add(modelItemFromResultSet(resultSet));
+			}
+			return items;
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return new ArrayList<>();
 	}
 	
 	@Override
@@ -65,6 +103,22 @@ public class OrderDAO implements Dao<Order> {
 		}
 		return new ArrayList<>();
 	}
+	
+	public List<Customer> readAllCustomers() {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("select * from customers");) {
+			List<Customer> customers = new ArrayList<>();
+			while (resultSet.next()) {
+				customers.add(modelCustFromResultSet(resultSet));
+			}
+			return customers;
+		} catch (SQLException e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return new ArrayList<>();
+	}
 
 	public Order readLatest() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -72,6 +126,19 @@ public class OrderDAO implements Dao<Order> {
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders ORDER BY id DESC LIMIT 1");) {
 			resultSet.next();
 			return modelFromResultSet(resultSet);
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	}
+	
+	public Item readItem(Long id) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM items where id = " + id);) {
+			resultSet.next();
+			return modelItemFromResultSet(resultSet);
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());

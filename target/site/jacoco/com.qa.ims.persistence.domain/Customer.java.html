@@ -54,26 +54,26 @@ public class Customer {
 	public boolean equals(Object obj) {
 <span class="fc bfc" id="L55" title="All 2 branches covered.">		if (this == obj)</span>
 <span class="fc" id="L56">			return true;</span>
-<span class="pc bpc" id="L57" title="1 of 2 branches missed.">		if (obj == null)</span>
-<span class="nc" id="L58">			return false;</span>
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		if (getClass() != obj.getClass())</span>
-<span class="nc" id="L60">			return false;</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		if (obj == null)</span>
+<span class="fc" id="L58">			return false;</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		if (getClass() != obj.getClass())</span>
+<span class="fc" id="L60">			return false;</span>
 <span class="fc" id="L61">		Customer other = (Customer) obj;</span>
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (firstName == null) {</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">			if (other.firstName != null)</span>
-<span class="nc" id="L64">				return false;</span>
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		} else if (!firstName.equals(other.firstName))</span>
-<span class="nc" id="L66">			return false;</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		if (firstName == null) {</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">			if (other.firstName != null)</span>
+<span class="fc" id="L64">				return false;</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">		} else if (!firstName.equals(other.firstName))</span>
+<span class="fc" id="L66">			return false;</span>
 <span class="fc bfc" id="L67" title="All 2 branches covered.">		if (id == null) {</span>
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">			if (other.id != null)</span>
-<span class="nc" id="L69">				return false;</span>
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		} else if (!id.equals(other.id))</span>
-<span class="nc" id="L71">			return false;</span>
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (surname == null) {</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">			if (other.surname != null)</span>
-<span class="nc" id="L74">				return false;</span>
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		} else if (!surname.equals(other.surname))</span>
-<span class="nc" id="L76">			return false;</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">			if (other.id != null)</span>
+<span class="fc" id="L69">				return false;</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		} else if (!id.equals(other.id))</span>
+<span class="fc" id="L71">			return false;</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		if (surname == null) {</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">			if (other.surname != null)</span>
+<span class="fc" id="L74">				return false;</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		} else if (!surname.equals(other.surname))</span>
+<span class="fc" id="L76">			return false;</span>
 <span class="fc" id="L77">		return true;</span>
 	}
 

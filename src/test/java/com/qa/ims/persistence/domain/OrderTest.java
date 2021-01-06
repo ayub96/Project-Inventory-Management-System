@@ -49,7 +49,7 @@ public class OrderTest {
 		String expected = "[order ID]: " + 2L 
 						+ "\n [customer ID]: " + 1L
 						+ "\n [items]:\n" + myItem 
-						+ " [Total]: £" + 29.99;
+						+ " [Total]: " + 29.99;
 		assertEquals(expected, order.toString());
 	}
 	

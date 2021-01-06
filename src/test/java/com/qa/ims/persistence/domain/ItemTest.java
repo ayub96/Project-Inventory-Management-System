@@ -50,12 +50,4 @@ public class ItemTest {
 		assertEquals(expected, item);
 	}
 	
-	@Test
-	public void testEqualsFalse() {
-		Item item = new Item(1L, "FIFA", 35L, 35.99);
-		Item myItem = new Item(2L, "FIFA", 35L, 35.99);
-		boolean expected = false;
-		assertEquals(expected, item.equals(myItem));
-	}
-	
 }

@@ -20,65 +20,64 @@ public class DBUtils {
 	private final String DB_PASS;
 
 <span class="fc" id="L22">	private final String DB_URL = &quot;jdbc:mysql://localhost:3306/ims&quot;;</span>
-//	private final String DB_URL = &quot;jdbc:mysql://localhost/student&quot;;
 
-<span class="fc" id="L25">	private DBUtils(String username, String password) {</span>
-<span class="fc" id="L26">		this.DB_USER = username;</span>
-<span class="fc" id="L27">		this.DB_PASS = password;</span>
+<span class="fc" id="L24">	private DBUtils(String username, String password) {</span>
+<span class="fc" id="L25">		this.DB_USER = username;</span>
+<span class="fc" id="L26">		this.DB_PASS = password;</span>
 
-<span class="fc" id="L29">		init();</span>
-<span class="fc" id="L30">	}</span>
+<span class="fc" id="L28">		init();</span>
+<span class="fc" id="L29">	}</span>
 
 	public int init() {
-<span class="fc" id="L33">		return this.init(&quot;src/main/resources/sql-schema.sql&quot;, &quot;src/main/resources/sql-data.sql&quot;);</span>
+<span class="fc" id="L32">		return this.init(&quot;src/main/resources/sql-schema.sql&quot;, &quot;src/main/resources/sql-data.sql&quot;);</span>
 	}
 
 	public int init(String... paths) {
-<span class="fc" id="L37">		int modified = 0;</span>
+<span class="fc" id="L36">		int modified = 0;</span>
 
-<span class="fc bfc" id="L39" title="All 2 branches covered.">		for (String path : paths) {</span>
-<span class="fc" id="L40">			modified += executeSQLFile(path);</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">		for (String path : paths) {</span>
+<span class="fc" id="L39">			modified += executeSQLFile(path);</span>
 		}
 
-<span class="fc" id="L43">		return modified;</span>
+<span class="fc" id="L42">		return modified;</span>
 	}
 
 	public int executeSQLFile(String file) {
-<span class="fc" id="L47">		int modified = 0;</span>
-<span class="fc" id="L48">		try (Connection connection = this.getConnection();</span>
-<span class="fc" id="L49">				BufferedReader br = new BufferedReader(new FileReader(file));) {</span>
-<span class="fc" id="L50">			String fileAsString = br.lines().reduce((acc, next) -&gt; acc + next).orElse(&quot;&quot;);</span>
-<span class="fc" id="L51">			String[] queries = fileAsString.split(&quot;;&quot;);</span>
-<span class="fc" id="L52">			modified += Stream.of(queries).map(string -&gt; {</span>
-<span class="fc" id="L53">				try (Statement statement = connection.createStatement();) {</span>
-<span class="fc" id="L54">					return statement.executeUpdate(string);</span>
-<span class="fc" id="L55">				} catch (Exception e) {</span>
-<span class="fc" id="L56">					LOGGER.debug(e);</span>
-<span class="fc" id="L57">					return 0;</span>
+<span class="fc" id="L46">		int modified = 0;</span>
+<span class="fc" id="L47">		try (Connection connection = this.getConnection();</span>
+<span class="fc" id="L48">				BufferedReader br = new BufferedReader(new FileReader(file));) {</span>
+<span class="fc" id="L49">			String fileAsString = br.lines().reduce((acc, next) -&gt; acc + next).orElse(&quot;&quot;);</span>
+<span class="fc" id="L50">			String[] queries = fileAsString.split(&quot;;&quot;);</span>
+<span class="fc" id="L51">			modified += Stream.of(queries).map(string -&gt; {</span>
+<span class="fc" id="L52">				try (Statement statement = connection.createStatement();) {</span>
+<span class="fc" id="L53">					return statement.executeUpdate(string);</span>
+<span class="fc" id="L54">				} catch (Exception e) {</span>
+<span class="fc" id="L55">					LOGGER.debug(e);</span>
+<span class="fc" id="L56">					return 0;</span>
 				}
-<span class="fc" id="L59">			}).reduce((acc, next) -&gt; acc + next).orElse(0);</span>
-<span class="nc" id="L60">		} catch (Exception e) {</span>
-<span class="nc" id="L61">			LOGGER.debug(e);</span>
-<span class="fc" id="L62">		}</span>
-<span class="fc" id="L63">		return modified;</span>
+<span class="fc" id="L58">			}).reduce((acc, next) -&gt; acc + next).orElse(0);</span>
+<span class="nc" id="L59">		} catch (Exception e) {</span>
+<span class="nc" id="L60">			LOGGER.debug(e);</span>
+<span class="fc" id="L61">		}</span>
+<span class="fc" id="L62">		return modified;</span>
 	}
 
 	public Connection getConnection() throws SQLException {
-<span class="fc" id="L67">		return DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);</span>
+<span class="fc" id="L66">		return DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);</span>
 	}
 
 	public static DBUtils instance;
 
 	public static DBUtils connect(String username, String password) {
-<span class="fc" id="L73">		instance = new DBUtils(username, password);</span>
-<span class="fc" id="L74">		return instance;</span>
+<span class="fc" id="L72">		instance = new DBUtils(username, password);</span>
+<span class="fc" id="L73">		return instance;</span>
 	}
 
 	public static DBUtils getInstance() {
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (instance == null) {</span>
-<span class="nc" id="L79">			instance = new DBUtils(&quot;&quot;, &quot;&quot;);</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (instance == null) {</span>
+<span class="nc" id="L78">			instance = new DBUtils(&quot;&quot;, &quot;&quot;);</span>
 		}
-<span class="fc" id="L81">		return instance;</span>
+<span class="fc" id="L80">		return instance;</span>
 	}
 
 }
