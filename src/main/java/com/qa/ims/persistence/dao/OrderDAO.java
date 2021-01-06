@@ -23,8 +23,9 @@ public class OrderDAO implements Dao<Order> {
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long order_id = resultSet.getLong("id");
 		Long customer_id = resultSet.getLong("fk_customer_id");
+		String date = resultSet.getString("date");
 		List<Item> items = readOrderline(order_id);
-		return new Order(order_id, customer_id, items);
+		return new Order(order_id, customer_id, date, items);
 	}
 	
 	public Item modelItemFromResultSet(ResultSet resultSet) throws SQLException {
@@ -70,6 +71,7 @@ public class OrderDAO implements Dao<Order> {
 		}
 		return null;
 	}
+	
 	
 	public List<Item> readAllItems(){
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -198,6 +200,19 @@ public class OrderDAO implements Dao<Order> {
 		}
 		return null;
 	}
+	
+	public Order updateDateTime(Order order) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+			statement.executeUpdate("update orders set date =  NOW() where id = " + order.getOrder_id());
+			return readOrder(order.getOrder_id());
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return null;
+	}
+
 
 	@Override
 	public int delete(long id) {

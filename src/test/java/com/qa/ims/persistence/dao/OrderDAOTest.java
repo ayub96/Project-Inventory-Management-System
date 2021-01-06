@@ -3,7 +3,9 @@ package com.qa.ims.persistence.dao;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -53,21 +55,29 @@ public class OrderDAOTest {
 	
 	@Test
 	public void testReadAll() {
+		Date date = new Date();
+		SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String currentTime = sdf.format(date);
+		
 		List<Item> items = new ArrayList<>();
 		items.add(new Item(1L ,"GTA", 50L, 19.99));
 		List<Order> expected = new ArrayList<>();
-		expected.add(new Order(1L, 1L, items));
+		expected.add(new Order(1L, 1L, currentTime, items));
 		assertEquals(expected, DAO.readAll());
 	}
 	
 	@Test
 	public void testReadLatest() {
+		Date date = new Date();
+		SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String currentTime = sdf.format(date);
+		
 		itemDAO.create(new Item(2L ,"Warcraft", 60L, 12.99));
 		DAO.create(new Order(1L));
 		DAO.createOrderline(2L, 2L);
 		List<Item> items = new ArrayList<>();
 		items.add(new Item(2L ,"Warcraft", 60L, 12.99));
-		Order expected = new Order(2L, 1L, items);
+		Order expected = new Order(2L, 1L, currentTime, items);
 		assertEquals(expected, DAO.readLatest());
 	}
 	
@@ -80,10 +90,14 @@ public class OrderDAOTest {
 	
 	@Test
 	public void testRead() {
+		Date date = new Date();
+		SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String currentTime = sdf.format(date);
+		
 		final long ID = 1L;
 		List<Item> items = new ArrayList<>();
 		items.add(new Item(1L ,"GTA", 50L, 19.99));
-		assertEquals(new Order(1L, ID, items), DAO.readOrder(ID));
+		assertEquals(new Order(1L, ID, currentTime, items), DAO.readOrder(ID));
 	}
 	
 	@Test
@@ -113,20 +127,28 @@ public class OrderDAOTest {
 	
 	@Test
 	public void testUpdate() {
+		Date date = new Date();
+		SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String currentTime = sdf.format(date);
+		
 		custDAO.create(customer2);
 		List<Item> items = new ArrayList<>();
 		items.add(new Item(1L ,"GTA", 50L, 19.99));
 		Order updated = new Order(1L, 2L);
-		Order expected = new Order(1L, 2L, items);
+		Order expected = new Order(1L, 2L, currentTime, items);
 		assertEquals(expected, DAO.update(updated));
 	}
 	
 	@Test
 	public void testCreateOrderline() {
+		Date date = new Date();
+		SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String currentTime = sdf.format(date);
+		
 		List<Item> items = new ArrayList<>();
 		items.add(new Item(1L ,"GTA", 50L, 19.99));
 		items.add(new Item(1L ,"GTA", 50L, 19.99));
-		Order expected = new Order(1L, 1L, items);
+		Order expected = new Order(1L, 1L, currentTime, items);
 		assertEquals(expected, DAO.createOrderline(expected.getOrder_id(), 1L));
 	}
 	
@@ -150,6 +172,21 @@ public class OrderDAOTest {
 	public void testReadItem() {
 		final long ID = 1L;
 		assertEquals(new Item(1L ,"GTA", 50L, 19.99), DAO.readItem(ID));
+	}
+	
+	@Test
+	public void testUpdateDateTime() {
+		Date date = new Date();
+		SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String currentTime = sdf.format(date);
+		
+		List<Item> items = new ArrayList<>();
+		items.add(new Item(1L ,"GTA", 50L, 19.99));
+		
+		Order order = new Order(1L, 1L, "1984-01-01 00:00:00", items);
+		Order updatedOrder = new Order(1L, 1L, currentTime, items);
+		
+		assertEquals(updatedOrder, DAO.updateDateTime(order));
 	}
 	
 }

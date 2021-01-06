@@ -79,6 +79,7 @@ public class OrderController implements CrudController<Order> {
 				break;
 			case "delete":
 				deleteItem(order_id);
+				orderDAO.updateDateTime(orderDAO.readOrder(order_id));
 				response = null;
 				break;
 			default:
@@ -109,6 +110,7 @@ public class OrderController implements CrudController<Order> {
 				stock -= quantity;
 				item.setQuantity(stock);
 				orderDAO.updateItem(item);
+				orderDAO.updateDateTime(orderDAO.readOrder(order_id));
 			}
 			LOGGER.info("\nAdd another item? [y/?]:");
 			response = utils.getString();
@@ -128,7 +130,7 @@ public class OrderController implements CrudController<Order> {
 		return orderDAO.delete(order_id);
 	}
 	
-	public int deleteItem(Long order_id) {	// Should return int?
+	public int deleteItem(Long order_id) {
 		LOGGER.info("\nPlease enter the ID of the item to delete:");
 		Long item_id = utils.getLong();
 		return orderDAO.deleteItem(order_id, item_id);
