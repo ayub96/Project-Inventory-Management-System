@@ -24,14 +24,14 @@ public class IMS {
 	private final ItemController items;
 	private final Utils utils;
 
-<span class="nc" id="L27">	public IMS() {</span>
-<span class="nc" id="L28">		this.utils = new Utils();									// initialise the other classes we will need to use</span>
-<span class="nc" id="L29">		final CustomerDAO custDAO = new CustomerDAO();				// a value can be assigned to a final variable only ONE time, WHY IS CustomerDAO publicly instantiated and not privately?</span>
-<span class="nc" id="L30">		this.customers = new CustomerController(custDAO, utils);</span>
-<span class="nc" id="L31">		final ItemDAO itemDAO = new ItemDAO();</span>
-<span class="nc" id="L32">		this.items = new ItemController(itemDAO, utils);</span>
-<span class="nc" id="L33">		final OrderDAO orderDAO = new OrderDAO(itemDAO);</span>
-<span class="nc" id="L34">		this.orders = new OrderController(orderDAO, itemDAO, custDAO, items, utils);</span>
+<span class="nc" id="L27">	public IMS() {					</span>
+<span class="nc" id="L28">		final CustomerDAO custDAO = new CustomerDAO();				</span>
+<span class="nc" id="L29">		final ItemDAO itemDAO = new ItemDAO();</span>
+<span class="nc" id="L30">		final OrderDAO orderDAO = new OrderDAO();</span>
+<span class="nc" id="L31">		this.utils = new Utils();</span>
+<span class="nc" id="L32">		this.customers = new CustomerController(custDAO, utils);</span>
+<span class="nc" id="L33">		this.items = new ItemController(itemDAO, utils);</span>
+<span class="nc" id="L34">		this.orders = new OrderController(orderDAO, utils);</span>
 <span class="nc" id="L35">	}	</span>
 	
 	public void imsSystem() {
@@ -101,6 +101,14 @@ public class IMS {
 			break;
 		}
 <span class="nc" id="L103">	}</span>
+
+	public IMS(CustomerController customers, OrderController orders, ItemController items, Utils utils) {
+<span class="nc" id="L106">		super();</span>
+<span class="nc" id="L107">		this.customers = customers;</span>
+<span class="nc" id="L108">		this.orders = orders;</span>
+<span class="nc" id="L109">		this.items = items;</span>
+<span class="nc" id="L110">		this.utils = utils;</span>
+<span class="nc" id="L111">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

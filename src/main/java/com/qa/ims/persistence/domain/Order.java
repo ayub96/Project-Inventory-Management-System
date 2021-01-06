@@ -58,7 +58,7 @@ public class Order {
 		return "[order ID]: " + order_id 
 				+ "\n [customer ID]: " + customer_id
 				+ "\n [items]:\n" + myItems 
-				+ " [Total]: £" + total;
+				+ " [Total]: " + total;
 	}
 	
 	@Override

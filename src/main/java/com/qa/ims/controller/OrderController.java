@@ -110,7 +110,7 @@ public class OrderController implements CrudController<Order> {
 				item.setQuantity(stock);
 				orderDAO.updateItem(item);
 			}
-			LOGGER.info("\nAdd a different item? [y/?]:");
+			LOGGER.info("\nAdd another item? [y/?]:");
 			response = utils.getString();
 		}while(response.equals("y"));
 		if(newItem) {

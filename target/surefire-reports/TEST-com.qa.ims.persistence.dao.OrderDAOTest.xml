@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="8" failures="0" name="com.qa.ims.persistence.dao.OrderDAOTest" time="5.809" errors="0" skipped="0">
+<testsuite tests="16" failures="0" name="com.qa.ims.persistence.dao.OrderDAOTest" time="8.086" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="14.0.1+7"/>
@@ -58,12 +58,20 @@
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testCreateOrderline" time="0.61"/>
-  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testReadLatest" time="0.858"/>
-  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testRead" time="0.681"/>
-  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testDeleteOrderline" time="0.642"/>
-  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testReadAll" time="0.867"/>
-  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testCreate" time="0.67"/>
-  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testDelete" time="0.694"/>
-  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testUpdate" time="0.787"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testCreateOrderline" time="0.562"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testReadLatest" time="0.666"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testRead" time="0.485"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testUpdateItem" time="0.651"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testReadLatestFAIL" time="0.517"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testReadOrderFAIL" time="0.429"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testReadItem" time="0.438"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testDeleteOrderline" time="0.417"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testReadAllCustomers" time="0.483"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testCreateFAIL" time="0.455"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testReadAll" time="0.462"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testDeleteItem" time="0.409"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testCreate" time="0.496"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testDelete" time="0.498"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testReadAllItems" time="0.428"/>
+  <testcase classname="com.qa.ims.persistence.dao.OrderDAOTest" name="testUpdate" time="0.69"/>
 </testsuite>
