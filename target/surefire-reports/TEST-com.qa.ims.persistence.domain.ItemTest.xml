@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="4" failures="0" name="com.qa.ims.persistence.domain.ItemTest" time="1.007" errors="0" skipped="0">
+<testsuite tests="4" failures="0" name="com.qa.ims.persistence.domain.ItemTest" time="1.738" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="14.0.1+7"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-14.0.1\bin"/>
-    <property name="maven.multiModuleProjectDirectory" value="C:/Users/Ayub/eclipse-workspace/Ayub-IMS-main"/>
+    <property name="maven.multiModuleProjectDirectory" value="C:/Users/Ayub/Desktop/final IMS/myIMS"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="java.vendor.url" value="https://java.oracle.com/"/>
     <property name="guice.disable.misplaced.annotation.check" value="true"/>
@@ -15,7 +15,7 @@
     <property name="user.country" value="GB"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="C:\Users\Ayub\eclipse-workspace\Ayub-IMS-main"/>
+    <property name="user.dir" value="C:\Users\Ayub\Desktop\final IMS\myIMS"/>
     <property name="java.vm.compressedOopsMode" value="32-bit"/>
     <property name="java.runtime.version" value="14.0.1+7"/>
     <property name="os.arch" value="amd64"/>
@@ -58,8 +58,8 @@
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="com.qa.ims.persistence.domain.ItemTest" name="testSetItemName" time="0.261"/>
-  <testcase classname="com.qa.ims.persistence.domain.ItemTest" name="testSetId" time="0.363"/>
-  <testcase classname="com.qa.ims.persistence.domain.ItemTest" name="testSetQuantity" time="0.188"/>
-  <testcase classname="com.qa.ims.persistence.domain.ItemTest" name="testSetPrice" time="0.195"/>
+  <testcase classname="com.qa.ims.persistence.domain.ItemTest" name="testSetItemName" time="0.473"/>
+  <testcase classname="com.qa.ims.persistence.domain.ItemTest" name="testSetId" time="0.359"/>
+  <testcase classname="com.qa.ims.persistence.domain.ItemTest" name="testSetQuantity" time="0.515"/>
+  <testcase classname="com.qa.ims.persistence.domain.ItemTest" name="testSetPrice" time="0.391"/>
 </testsuite>

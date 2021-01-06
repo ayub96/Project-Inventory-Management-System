@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="9" failures="0" name="com.qa.ims.persistence.domain.ItemEqualsTest" time="3.833" errors="0" skipped="0">
+<testsuite tests="9" failures="0" name="com.qa.ims.persistence.domain.ItemEqualsTest" time="4.01" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="14.0.1+7"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-14.0.1\bin"/>
-    <property name="maven.multiModuleProjectDirectory" value="C:/Users/Ayub/eclipse-workspace/Ayub-IMS-main"/>
+    <property name="maven.multiModuleProjectDirectory" value="C:/Users/Ayub/Desktop/final IMS/myIMS"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="java.vendor.url" value="https://java.oracle.com/"/>
     <property name="guice.disable.misplaced.annotation.check" value="true"/>
@@ -15,7 +15,7 @@
     <property name="user.country" value="GB"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="C:\Users\Ayub\eclipse-workspace\Ayub-IMS-main"/>
+    <property name="user.dir" value="C:\Users\Ayub\Desktop\final IMS\myIMS"/>
     <property name="java.vm.compressedOopsMode" value="32-bit"/>
     <property name="java.runtime.version" value="14.0.1+7"/>
     <property name="os.arch" value="amd64"/>
@@ -58,13 +58,13 @@
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="com.qa.ims.persistence.domain.ItemEqualsTest" name="testEqualsFalse" time="0.361"/>
-  <testcase classname="com.qa.ims.persistence.domain.ItemEqualsTest" name="testEqualObjects" time="0.473"/>
-  <testcase classname="com.qa.ims.persistence.domain.ItemEqualsTest" name="nullEqualFalse" time="0.365"/>
-  <testcase classname="com.qa.ims.persistence.domain.ItemEqualsTest" name="IdNullEqualFalse" time="0.36"/>
-  <testcase classname="com.qa.ims.persistence.domain.ItemEqualsTest" name="IdEqualFalse" time="0.572"/>
-  <testcase classname="com.qa.ims.persistence.domain.ItemEqualsTest" name="nameNullEqualFalse" time="0.407"/>
-  <testcase classname="com.qa.ims.persistence.domain.ItemEqualsTest" name="nameEqualFalse" time="0.628"/>
-  <testcase classname="com.qa.ims.persistence.domain.ItemEqualsTest" name="classEqualFalse" time="0.338"/>
-  <testcase classname="com.qa.ims.persistence.domain.ItemEqualsTest" name="testSameObject" time="0.329"/>
+  <testcase classname="com.qa.ims.persistence.domain.ItemEqualsTest" name="testEqualsFalse" time="0.348"/>
+  <testcase classname="com.qa.ims.persistence.domain.ItemEqualsTest" name="testEqualObjects" time="0.565"/>
+  <testcase classname="com.qa.ims.persistence.domain.ItemEqualsTest" name="nullEqualFalse" time="0.378"/>
+  <testcase classname="com.qa.ims.persistence.domain.ItemEqualsTest" name="IdNullEqualFalse" time="0.526"/>
+  <testcase classname="com.qa.ims.persistence.domain.ItemEqualsTest" name="IdEqualFalse" time="0.344"/>
+  <testcase classname="com.qa.ims.persistence.domain.ItemEqualsTest" name="nameNullEqualFalse" time="0.329"/>
+  <testcase classname="com.qa.ims.persistence.domain.ItemEqualsTest" name="nameEqualFalse" time="0.575"/>
+  <testcase classname="com.qa.ims.persistence.domain.ItemEqualsTest" name="classEqualFalse" time="0.319"/>
+  <testcase classname="com.qa.ims.persistence.domain.ItemEqualsTest" name="testSameObject" time="0.626"/>
 </testsuite>
