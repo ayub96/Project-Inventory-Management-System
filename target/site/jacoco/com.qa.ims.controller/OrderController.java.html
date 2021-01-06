@@ -79,59 +79,61 @@ public class OrderController implements CrudController&lt;Order&gt; {
 <span class="nc" id="L79">				break;</span>
 			case &quot;delete&quot;:
 <span class="nc" id="L81">				deleteItem(order_id);</span>
-<span class="nc" id="L82">				response = null;</span>
-<span class="nc" id="L83">				break;</span>
+<span class="nc" id="L82">				orderDAO.updateDateTime(orderDAO.readOrder(order_id));</span>
+<span class="nc" id="L83">				response = null;</span>
+<span class="nc" id="L84">				break;</span>
 			default:
-<span class="nc" id="L85">				LOGGER.info(&quot;\nInvalid selection&quot;);</span>
+<span class="nc" id="L86">				LOGGER.info(&quot;\nInvalid selection&quot;);</span>
 				break;
 			}
-<span class="nc" id="L88">		return response;</span>
+<span class="nc" id="L89">		return response;</span>
 	}
 
 	public Order addItems(Long order_id, boolean newItem) {
-<span class="fc" id="L92">		String response = &quot;&quot;;</span>
-<span class="fc" id="L93">		Order updated_order = null;</span>
+<span class="fc" id="L93">		String response = &quot;&quot;;</span>
+<span class="fc" id="L94">		Order updated_order = null;</span>
 		do {
-<span class="fc" id="L95">			readItems();</span>
-<span class="fc" id="L96">			LOGGER.info(&quot;\nPlease enter ID of item to add:&quot;);</span>
-<span class="fc" id="L97">			Long item_id = utils.getLong();</span>
-<span class="fc" id="L98">			LOGGER.info(&quot;\nPlease enter the quantity of the item:&quot;);</span>
-<span class="fc" id="L99">			Long quantity = utils.getLong();</span>
-<span class="fc" id="L100">			Item item = orderDAO.readItem(item_id);</span>
-<span class="fc" id="L101">			Long stock = item.getQuantity();</span>
-<span class="pc bpc" id="L102" title="1 of 2 branches missed.">			if(stock &lt; quantity) {</span>
-<span class="nc" id="L103">				LOGGER.info(&quot;\nERROR: insufficient stock!&quot;);</span>
+<span class="fc" id="L96">			readItems();</span>
+<span class="fc" id="L97">			LOGGER.info(&quot;\nPlease enter ID of item to add:&quot;);</span>
+<span class="fc" id="L98">			Long item_id = utils.getLong();</span>
+<span class="fc" id="L99">			LOGGER.info(&quot;\nPlease enter the quantity of the item:&quot;);</span>
+<span class="fc" id="L100">			Long quantity = utils.getLong();</span>
+<span class="fc" id="L101">			Item item = orderDAO.readItem(item_id);</span>
+<span class="fc" id="L102">			Long stock = item.getQuantity();</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">			if(stock &lt; quantity) {</span>
+<span class="nc" id="L104">				LOGGER.info(&quot;\nERROR: insufficient stock!&quot;);</span>
 			}
 			else {
-<span class="fc bfc" id="L106" title="All 2 branches covered.">				for(int i=0; i&lt;quantity; i++) {</span>
-<span class="fc" id="L107">					updated_order = orderDAO.createOrderline(order_id, item_id);</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">				for(int i=0; i&lt;quantity; i++) {</span>
+<span class="fc" id="L108">					updated_order = orderDAO.createOrderline(order_id, item_id);</span>
 				}
-<span class="fc" id="L109">				stock -= quantity;</span>
-<span class="fc" id="L110">				item.setQuantity(stock);</span>
-<span class="fc" id="L111">				orderDAO.updateItem(item);</span>
+<span class="fc" id="L110">				stock -= quantity;</span>
+<span class="fc" id="L111">				item.setQuantity(stock);</span>
+<span class="fc" id="L112">				orderDAO.updateItem(item);</span>
+<span class="fc" id="L113">				orderDAO.updateDateTime(orderDAO.readOrder(order_id));</span>
 			}
-<span class="fc" id="L113">			LOGGER.info(&quot;\nAdd another item? [y/?]:&quot;);</span>
-<span class="fc" id="L114">			response = utils.getString();</span>
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		}while(response.equals(&quot;y&quot;));</span>
-<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if(newItem) {</span>
-<span class="fc" id="L117">			LOGGER.info(&quot;\nOrder created!&quot;);</span>
+<span class="fc" id="L115">			LOGGER.info(&quot;\nAdd another item? [y/?]:&quot;);</span>
+<span class="fc" id="L116">			response = utils.getString();</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		}while(response.equals(&quot;y&quot;));</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if(newItem) {</span>
+<span class="fc" id="L119">			LOGGER.info(&quot;\nOrder created!&quot;);</span>
 		}else {
-<span class="nc" id="L119">			LOGGER.info(&quot;\nOrder Updated!&quot;);</span>
+<span class="nc" id="L121">			LOGGER.info(&quot;\nOrder Updated!&quot;);</span>
 		}
-<span class="fc" id="L121">		return updated_order;</span>
+<span class="fc" id="L123">		return updated_order;</span>
 	}
 	
 	@Override
 	public int delete() {
-<span class="fc" id="L126">		LOGGER.info(&quot;\nPlease enter the id of the order you would like to delete:&quot;);</span>
-<span class="fc" id="L127">		Long order_id = utils.getLong();</span>
-<span class="fc" id="L128">		return orderDAO.delete(order_id);</span>
+<span class="fc" id="L128">		LOGGER.info(&quot;\nPlease enter the id of the order you would like to delete:&quot;);</span>
+<span class="fc" id="L129">		Long order_id = utils.getLong();</span>
+<span class="fc" id="L130">		return orderDAO.delete(order_id);</span>
 	}
 	
-	public int deleteItem(Long order_id) {	// Should return int?
-<span class="fc" id="L132">		LOGGER.info(&quot;\nPlease enter the ID of the item to delete:&quot;);</span>
-<span class="fc" id="L133">		Long item_id = utils.getLong();</span>
-<span class="fc" id="L134">		return orderDAO.deleteItem(order_id, item_id);</span>
+	public int deleteItem(Long order_id) {
+<span class="fc" id="L134">		LOGGER.info(&quot;\nPlease enter the ID of the item to delete:&quot;);</span>
+<span class="fc" id="L135">		Long item_id = utils.getLong();</span>
+<span class="fc" id="L136">		return orderDAO.deleteItem(order_id, item_id);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
