@@ -5,8 +5,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.qa.ims.persistence.dao.CustomerDAO;
-import com.qa.ims.persistence.dao.ItemDAO;
 import com.qa.ims.persistence.dao.OrderDAO;
 import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Item;
@@ -18,28 +16,30 @@ public class OrderController implements CrudController<Order> {
 	public static final Logger LOGGER = LogManager.getLogger();
 	
 	private OrderDAO orderDAO;
-	private CustomerDAO custDAO;
-	private ItemDAO itemDAO;
 	private Utils utils;
-	private ItemController itemController;
-	boolean newOrder = false;
 	
-	public OrderController(OrderDAO orderDAO, ItemDAO itemDAO, CustomerDAO custDAO, ItemController itemController, Utils utils) {
+	public OrderController(OrderDAO orderDAO, Utils utils) {
 		super();
-		this.itemController = itemController;
-		this.itemDAO = itemDAO;
-		this.custDAO = custDAO;
 		this.orderDAO = orderDAO;
 		this.utils = utils;
 	}
 
 	public List<Customer> readCustomers() {
 		LOGGER.info("");
-		List<Customer> customers = custDAO.readAll();
+		List<Customer> customers = orderDAO.readAllCustomers();
 		for(Customer customer : customers) {
 			LOGGER.info(customer.toString());
 		}
 		return customers;
+	}
+	
+	public List<Item> readItems() {
+		LOGGER.info("");
+		List<Item> items = orderDAO.readAllItems();
+		for(Item item : items) {
+			LOGGER.info(item.toString());
+		}
+		return items;
 	}
 	
 	@Override
@@ -57,55 +57,80 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("\nPlease enter the customer ID:");
 		Long customer_id = utils.getLong();
 		Order order = orderDAO.create(new Order(customer_id));
-		newOrder = true;
-		update();
+		addItems(order.getOrder_id(), true);
 		return order;
 	}
-
+	
 	@Override
 	public Order update() {
-		Long order_id = 0L;
-		if(newOrder) {
-			Order order = orderDAO.readLatest();
-			order_id = order.getOrder_id();
-			newOrder = false;
-		}else {
-			readAll();
-			LOGGER.info("\nPlease enter ID of order to update:");
-			order_id = utils.getLong();
-		}
 		
+		readAll();
+		LOGGER.info("\nPlease enter ID of order to update:");
+		Long order_id = utils.getLong(); 
+		
+		LOGGER.info("\nADD:\tAdd items to an order\nDELETE:\tDelete items from an order");
+		String selection = utils.getString().toLowerCase();
+		
+		Order response = new Order();
+		
+		switch(selection) {
+			case "add":
+				response = addItems(order_id, false);
+				break;
+			case "delete":
+				deleteItem(order_id);
+				response = null;
+				break;
+			default:
+				LOGGER.info("\nInvalid selection");
+				break;
+			}
+		return response;
+	}
+
+	public Order addItems(Long order_id, boolean newItem) {
 		String response = "";
+		Order updated_order = null;
 		do {
-			itemController.readAll();
+			readItems();
 			LOGGER.info("\nPlease enter ID of item to add:");
 			Long item_id = utils.getLong();
 			LOGGER.info("\nPlease enter the quantity of the item:");
 			Long quantity = utils.getLong();
-			Item item = itemDAO.readItem(item_id);
+			Item item = orderDAO.readItem(item_id);
 			Long stock = item.getQuantity();
 			if(stock < quantity) {
 				LOGGER.info("\nERROR: insufficient stock!");
 			}
 			else {
 				for(int i=0; i<quantity; i++) {
-					orderDAO.createOrderline(order_id, item_id);
+					updated_order = orderDAO.createOrderline(order_id, item_id);
 				}
 				stock -= quantity;
 				item.setQuantity(stock);
-				itemDAO.update(item);
+				orderDAO.updateItem(item);
 			}
-			LOGGER.info("\nAdd a different item? [y/n]:");
+			LOGGER.info("\nAdd another item? [y/?]:");
 			response = utils.getString();
 		}while(response.equals("y"));
-		LOGGER.info("\nOrder Updated!");
-		return null;
+		if(newItem) {
+			LOGGER.info("\nOrder created!");
+		}else {
+			LOGGER.info("\nOrder Updated!");
+		}
+		return updated_order;
 	}
-
+	
 	@Override
 	public int delete() {
 		LOGGER.info("\nPlease enter the id of the order you would like to delete:");
 		Long order_id = utils.getLong();
 		return orderDAO.delete(order_id);
+	}
+	
+	public int deleteItem(Long order_id) {	// Should return int?
+		LOGGER.info("\nPlease enter the ID of the item to delete:");
+		Long item_id = utils.getLong();
+		return orderDAO.deleteItem(order_id, item_id);
 	}
 }

@@ -1,6 +1,7 @@
 package com.qa.ims.persistence.dao;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,7 @@ public class ItemDAOTest {
 	}
 	
 	@Test
-	public void testRead() {
+	public void testReadItem() {
 		final long ID = 2L;
 		assertEquals(new Item(2L,"PUBG", 60L, 39.99), DAO.readItem(ID));
 	}
@@ -65,4 +66,5 @@ public class ItemDAOTest {
 	public void testDelete() {
 		assertEquals(1, DAO.delete(1));
 	}
+
 }

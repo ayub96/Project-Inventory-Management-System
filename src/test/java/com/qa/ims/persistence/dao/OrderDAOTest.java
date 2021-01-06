@@ -1,6 +1,7 @@
 package com.qa.ims.persistence.dao;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +19,12 @@ public class OrderDAOTest {
 
 	private final ItemDAO itemDAO = new ItemDAO();
 	private final CustomerDAO custDAO = new CustomerDAO();
-	private final OrderDAO DAO = new OrderDAO(itemDAO);
+	private final OrderDAO DAO = new OrderDAO();
 	final Order created1 = new Order(1L);
 	final Customer customer1 = new Customer(1L, "john", "smith");
 	final Customer customer2 = new Customer(2L, "ben", "johnson");
 	final Item item1 = new Item(1L, "GTA", 50L, 19.99);
-	
+
 	@BeforeClass
 	public static void init() {
 		DBUtils.connect("root", "root");
@@ -37,12 +38,17 @@ public class OrderDAOTest {
 		itemDAO.create(item1);
 		DAO.createOrderline(1L, 1L);
 	}
-	
+	 
 	@Test
 	public void testCreate() {
 		final Order order = new Order(1L);
 		final Order expected = new Order(2L, 1L);
 		assertEquals(expected, DAO.create(order));
+	}
+	
+	@Test
+	public void testCreateFAIL() {
+		assertNull(DAO.create(new Order(5L)));
 	}
 	
 	@Test
@@ -66,11 +72,43 @@ public class OrderDAOTest {
 	}
 	
 	@Test
+	public void testReadLatestFAIL() {
+		DAO.deleteOrderline(1L);
+		DAO.delete(1L);
+		assertNull(DAO.readLatest());
+	}
+	
+	@Test
 	public void testRead() {
 		final long ID = 1L;
 		List<Item> items = new ArrayList<>();
 		items.add(new Item(1L ,"GTA", 50L, 19.99));
 		assertEquals(new Order(1L, ID, items), DAO.readOrder(ID));
+	}
+	
+	@Test
+	public void testReadOrderFAIL() {
+		assertNull(DAO.readOrder(2L));
+	}
+	
+	@Test
+	public void testReadAllCustomers() {
+		List<Customer> expected = new ArrayList<>();
+		expected.add(new Customer(1L, "john", "smith"));
+		assertEquals(expected, DAO.readAllCustomers());
+	}
+	
+	@Test
+	public void testReadAllItems() {
+		List<Item> expected = new ArrayList<>();
+		expected.add(new Item(1L, "GTA", 50L, 19.99));
+		assertEquals(expected, DAO.readAllItems());
+	}
+	
+	@Test
+	public void testUpdateItem() {
+		final Item updated = new Item(1L,"FIFA", 20L, 69.99);
+		assertEquals(updated, DAO.updateItem(updated));
 	}
 	
 	@Test
@@ -101,6 +139,17 @@ public class OrderDAOTest {
 	public void testDelete() {
 		DAO.create(new Order(1L));
 		assertEquals(1, DAO.delete(1));
+	}
+	
+	@Test
+	public void testDeleteItem() {
+		assertEquals(1, DAO.deleteItem(1L, 1L));
+	}
+	
+	@Test
+	public void testReadItem() {
+		final long ID = 1L;
+		assertEquals(new Item(1L ,"GTA", 50L, 19.99), DAO.readItem(ID));
 	}
 	
 }

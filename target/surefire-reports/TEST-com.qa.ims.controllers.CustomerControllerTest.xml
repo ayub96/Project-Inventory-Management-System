@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="4" failures="0" name="com.qa.ims.controllers.CustomerControllerTest" time="3.672" errors="0" skipped="0">
+<testsuite tests="4" failures="0" name="com.qa.ims.controllers.CustomerControllerTest" time="3.372" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="14.0.1+7"/>
@@ -58,8 +58,8 @@
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="com.qa.ims.controllers.CustomerControllerTest" name="testReadAll" time="3.637"/>
-  <testcase classname="com.qa.ims.controllers.CustomerControllerTest" name="testCreate" time="0.014"/>
-  <testcase classname="com.qa.ims.controllers.CustomerControllerTest" name="testDelete" time="0.007"/>
-  <testcase classname="com.qa.ims.controllers.CustomerControllerTest" name="testUpdate" time="0.014"/>
+  <testcase classname="com.qa.ims.controllers.CustomerControllerTest" name="testReadAll" time="3.347"/>
+  <testcase classname="com.qa.ims.controllers.CustomerControllerTest" name="testCreate" time="0.009"/>
+  <testcase classname="com.qa.ims.controllers.CustomerControllerTest" name="testDelete" time="0.005"/>
+  <testcase classname="com.qa.ims.controllers.CustomerControllerTest" name="testUpdate" time="0.011"/>
 </testsuite>

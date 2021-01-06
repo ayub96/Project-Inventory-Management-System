@@ -7,7 +7,6 @@ public class Order {
 
 	private Long order_id;
 	private Long customer_id;
-	private Long item_id;
 	private List<Item> items = new ArrayList<>();
 	
 	public Order() {
@@ -18,14 +17,13 @@ public class Order {
 		this.customer_id = customer_id;
 	}
 	
-	public Order(Long order_id, Long customer_id) {	//super here?
+	public Order(Long order_id, Long customer_id) {
 		super();
 		this.order_id = order_id;
 		this.customer_id = customer_id;
-		
 	}
 	
-	public Order(Long order_id, Long customer_id, List<Item> items) {	//super here?
+	public Order(Long order_id, Long customer_id, List<Item> items) {
 		super();
 		this.order_id = order_id;
 		this.customer_id = customer_id;
@@ -60,15 +58,7 @@ public class Order {
 		return "[order ID]: " + order_id 
 				+ "\n [customer ID]: " + customer_id
 				+ "\n [items]:\n" + myItems 
-				+ " [Total]: £" + total;
-	}
-
-	public Long getItem_id() {
-		return item_id;
-	}
-
-	public void setItem_id(Long item_id) {
-		this.item_id = item_id;
+				+ " [Total]: " + total;
 	}
 	
 	@Override
@@ -83,8 +73,9 @@ public class Order {
 		if (items == null) {
 			if (other.items != null)
 				return false;
-		} else if (!items.equals(other.items))
-			return false;
+		} 
+//		else if (!items.equals(other.items))
+//			return false;
 		if (order_id == null) {
 			if (other.order_id != null)
 				return false;
@@ -95,11 +86,7 @@ public class Order {
 				return false;
 		} else if (!customer_id.equals(other.customer_id))
 			return false;
-		if (item_id == null) {
-			if (other.item_id != null)
-				return false;
-		} else if (!item_id.equals(other.item_id))
-			return false;
 		return true;
 	}
+
 }

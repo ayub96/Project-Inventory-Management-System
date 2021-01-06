@@ -8,63 +8,102 @@ calculate the cost of an order. A functionality has been added such that a user 
 
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+	1. Download the latest version of Java
+	2. Ensure you have access to a command line interface
 
 ### Prerequisites
 
 What things you need to install the software and how to install them
 
 ```
-Give examples
+jdk-14.0.1
 ```
 
 ### Installing
 
 A step by step series of examples that tell you how to get a development env running
 
-Say what the step will be
+Download the ims-jar-with-dependencies.jar from the target folder
 
 ```
-Give the example
+myIMS/target/ims-jar-with-dependencies.jar
 ```
 
-And repeat
+Open a command line interface eg Git Bash and navigate to the folder containing the .jar file. Then type in the following command to run the .jar file:
 
 ```
-until finished
+java- jar- ims-jar-with-dependencies.jar
 ```
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Running the tests
 
-Explain how to run the automated tests for this system. Break down into which tests and what they do
+Fork the repository to your PC. The JUnit tests may then be run using an IDE such as Eclipse.
 
 ### Unit Tests 
 
-Explain what these tests test, why and how to run them
+Unit tests are used to check that the Data Access Objects (DAOs) function correctly. This is done via the assertEquals() method which checks
+whether the DAO has returned what we expect.
+
+The Unit tests can be found in the folder:
 
 ```
-Give an example
+\Ayub-IMS-main\src\test\java\com\qa\ims\persistence\dao
+```
+
+The following Unit tests are available:
+
+```
+CustomerDAOTest.java
+ItemDAOTest.java
+OrderDAOTest.java
+```
+
+Below is an example of a test implemented in OrderDAOTest:
+
+```
+@Test
+public void testReadAll() {
+	List<Item> expected = new ArrayList<>();
+	expected.add(new Item(1L,"GTA", 50L, 29.99));
+	expected.add(new Item(2L,"PUBG", 60L, 39.99));
+	assertEquals(expected, DAO.readAll());
+}
 ```
 
 ### Integration Tests 
-Explain what these tests test, why and how to run them
+Integration tests are used to confirm that objects function correctly
+
+The Unit tests can be found in the folder:
 
 ```
-Give an example
+\Ayub-IMS-main\src\test\java\com\qa\ims\controllers
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
+The following Unit tests are available:
 
 ```
-Give an example
+CustomerControllerTest.java
+ItemControllerTest.java
+OrderControllerTest.java
 ```
 
-## Deployment
+Below is an example of a test implemented in CustomerControllerTest:
 
-Add additional notes about how to deploy this on a live system
+```
+@Test
+public void testCreate() {
+	final String F_NAME = "barry", L_NAME = "scott";
+	final Customer created = new Customer(F_NAME, L_NAME);
+
+	Mockito.when(utils.getString()).thenReturn(F_NAME, L_NAME);
+	Mockito.when(dao.create(created)).thenReturn(created);
+
+	assertEquals(created, controller.create());
+
+	Mockito.verify(utils, Mockito.times(2)).getString();
+	Mockito.verify(dao, Mockito.times(1)).create(created);
+}
+```
 
 ## Built With
 
@@ -77,15 +116,10 @@ We use [SemVer](http://semver.org/) for versioning.
 ## Authors
 
 * **Chris Perrins** - *Initial work* - [christophperrins](https://github.com/christophperrins)
+* **Ayub Azhar-Yusuf** - *Completion of project* - [Ayub96](https://github.com/ayub96)
 
 ## License
 
 This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md) file for details 
 
 *For help in [Choosing a license](https://choosealicense.com/)*
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc

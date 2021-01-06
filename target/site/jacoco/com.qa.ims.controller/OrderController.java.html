@@ -5,8 +5,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.qa.ims.persistence.dao.CustomerDAO;
-import com.qa.ims.persistence.dao.ItemDAO;
 import com.qa.ims.persistence.dao.OrderDAO;
 import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Item;
@@ -15,98 +13,125 @@ import com.qa.ims.utils.Utils;
 
 public class OrderController implements CrudController&lt;Order&gt; {
 
-<span class="nc" id="L18">	public static final Logger LOGGER = LogManager.getLogger();</span>
+<span class="fc" id="L16">	public static final Logger LOGGER = LogManager.getLogger();</span>
 	
 	private OrderDAO orderDAO;
-	private CustomerDAO custDAO;
-	private ItemDAO itemDAO;
 	private Utils utils;
-	private ItemController itemController;
-<span class="nc" id="L25">	boolean newOrder = false;</span>
 	
-	public OrderController(OrderDAO orderDAO, ItemDAO itemDAO, CustomerDAO custDAO, ItemController itemController, Utils utils) {
-<span class="nc" id="L28">		super();</span>
-<span class="nc" id="L29">		this.itemController = itemController;</span>
-<span class="nc" id="L30">		this.itemDAO = itemDAO;</span>
-<span class="nc" id="L31">		this.custDAO = custDAO;</span>
-<span class="nc" id="L32">		this.orderDAO = orderDAO;</span>
-<span class="nc" id="L33">		this.utils = utils;</span>
-<span class="nc" id="L34">	}</span>
+	public OrderController(OrderDAO orderDAO, Utils utils) {
+<span class="fc" id="L22">		super();</span>
+<span class="fc" id="L23">		this.orderDAO = orderDAO;</span>
+<span class="fc" id="L24">		this.utils = utils;</span>
+<span class="fc" id="L25">	}</span>
 
 	public List&lt;Customer&gt; readCustomers() {
-<span class="nc" id="L37">		LOGGER.info(&quot;&quot;);</span>
-<span class="nc" id="L38">		List&lt;Customer&gt; customers = custDAO.readAll();</span>
-<span class="nc bnc" id="L39" title="All 2 branches missed.">		for(Customer customer : customers) {</span>
-<span class="nc" id="L40">			LOGGER.info(customer.toString());</span>
-<span class="nc" id="L41">		}</span>
-<span class="nc" id="L42">		return customers;</span>
+<span class="fc" id="L28">		LOGGER.info(&quot;&quot;);</span>
+<span class="fc" id="L29">		List&lt;Customer&gt; customers = orderDAO.readAllCustomers();</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">		for(Customer customer : customers) {</span>
+<span class="fc" id="L31">			LOGGER.info(customer.toString());</span>
+<span class="fc" id="L32">		}</span>
+<span class="fc" id="L33">		return customers;</span>
+	}
+	
+	public List&lt;Item&gt; readItems() {
+<span class="fc" id="L37">		LOGGER.info(&quot;&quot;);</span>
+<span class="fc" id="L38">		List&lt;Item&gt; items = orderDAO.readAllItems();</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">		for(Item item : items) {</span>
+<span class="fc" id="L40">			LOGGER.info(item.toString());</span>
+<span class="fc" id="L41">		}</span>
+<span class="fc" id="L42">		return items;</span>
 	}
 	
 	@Override
 	public List&lt;Order&gt; readAll() {
-<span class="nc" id="L47">		List&lt;Order&gt; orders = orderDAO.readAll();</span>
-<span class="nc bnc" id="L48" title="All 2 branches missed.">		for(Order order : orders) {</span>
-<span class="nc" id="L49">			LOGGER.info(&quot;\n&quot; + order.toString());</span>
-<span class="nc" id="L50">		}</span>
-<span class="nc" id="L51">		return orders;</span>
+<span class="fc" id="L47">		List&lt;Order&gt; orders = orderDAO.readAll();</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">		for(Order order : orders) {</span>
+<span class="fc" id="L49">			LOGGER.info(&quot;\n&quot; + order.toString());</span>
+<span class="fc" id="L50">		}</span>
+<span class="fc" id="L51">		return orders;</span>
 	}
 	
 	@Override
 	public Order create() {
-<span class="nc" id="L56">		readCustomers();</span>
-<span class="nc" id="L57">		LOGGER.info(&quot;\nPlease enter the customer ID:&quot;);</span>
-<span class="nc" id="L58">		Long customer_id = utils.getLong();</span>
-<span class="nc" id="L59">		Order order = orderDAO.create(new Order(customer_id));</span>
-<span class="nc" id="L60">		newOrder = true;</span>
-<span class="nc" id="L61">		update();</span>
-<span class="nc" id="L62">		return order;</span>
+<span class="fc" id="L56">		readCustomers();</span>
+<span class="fc" id="L57">		LOGGER.info(&quot;\nPlease enter the customer ID:&quot;);</span>
+<span class="fc" id="L58">		Long customer_id = utils.getLong();</span>
+<span class="fc" id="L59">		Order order = orderDAO.create(new Order(customer_id));</span>
+<span class="fc" id="L60">		addItems(order.getOrder_id(), true);</span>
+<span class="fc" id="L61">		return order;</span>
 	}
-
+	
 	@Override
 	public Order update() {
-<span class="nc" id="L67">		Long order_id = 0L;</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		if(newOrder) {</span>
-<span class="nc" id="L69">			Order order = orderDAO.readLatest();</span>
-<span class="nc" id="L70">			order_id = order.getOrder_id();</span>
-<span class="nc" id="L71">			newOrder = false;</span>
-<span class="nc" id="L72">		}else {</span>
-<span class="nc" id="L73">			readAll();</span>
-<span class="nc" id="L74">			LOGGER.info(&quot;\nPlease enter ID of order to update:&quot;);</span>
-<span class="nc" id="L75">			order_id = utils.getLong();</span>
-		}
 		
-<span class="nc" id="L78">		String response = &quot;&quot;;</span>
-		do {
-<span class="nc" id="L80">			itemController.readAll();</span>
-<span class="nc" id="L81">			LOGGER.info(&quot;\nPlease enter ID of item to add:&quot;);</span>
-<span class="nc" id="L82">			Long item_id = utils.getLong();</span>
-<span class="nc" id="L83">			LOGGER.info(&quot;\nPlease enter the quantity of the item:&quot;);</span>
-<span class="nc" id="L84">			Long quantity = utils.getLong();</span>
-<span class="nc" id="L85">			Item item = itemDAO.readItem(item_id);</span>
-<span class="nc" id="L86">			Long stock = item.getQuantity();</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">			if(stock &lt; quantity) {</span>
-<span class="nc" id="L88">				LOGGER.info(&quot;\nERROR: insufficient stock!&quot;);</span>
+<span class="nc" id="L67">		readAll();</span>
+<span class="nc" id="L68">		LOGGER.info(&quot;\nPlease enter ID of order to update:&quot;);</span>
+<span class="nc" id="L69">		Long order_id = utils.getLong(); </span>
+		
+<span class="nc" id="L71">		LOGGER.info(&quot;\nADD:\tAdd items to an order\nDELETE:\tDelete items from an order&quot;);</span>
+<span class="nc" id="L72">		String selection = utils.getString().toLowerCase();</span>
+		
+<span class="nc" id="L74">		Order response = new Order();</span>
+		
+<span class="nc bnc" id="L76" title="All 3 branches missed.">		switch(selection) {</span>
+			case &quot;add&quot;:
+<span class="nc" id="L78">				response = addItems(order_id, false);</span>
+<span class="nc" id="L79">				break;</span>
+			case &quot;delete&quot;:
+<span class="nc" id="L81">				deleteItem(order_id);</span>
+<span class="nc" id="L82">				response = null;</span>
+<span class="nc" id="L83">				break;</span>
+			default:
+<span class="nc" id="L85">				LOGGER.info(&quot;\nInvalid selection&quot;);</span>
+				break;
 			}
-			else {
-<span class="nc bnc" id="L91" title="All 2 branches missed.">				for(int i=0; i&lt;quantity; i++) {</span>
-<span class="nc" id="L92">					orderDAO.createOrderline(order_id, item_id);</span>
-				}
-<span class="nc" id="L94">				stock -= quantity;</span>
-<span class="nc" id="L95">				item.setQuantity(stock);</span>
-<span class="nc" id="L96">				itemDAO.update(item);</span>
-			}
-<span class="nc" id="L98">			LOGGER.info(&quot;\nAdd a different item? [y/n]:&quot;);</span>
-<span class="nc" id="L99">			response = utils.getString();</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		}while(response.equals(&quot;y&quot;));</span>
-<span class="nc" id="L101">		LOGGER.info(&quot;\nOrder Updated!&quot;);</span>
-<span class="nc" id="L102">		return null;</span>
+<span class="nc" id="L88">		return response;</span>
 	}
 
+	public Order addItems(Long order_id, boolean newItem) {
+<span class="fc" id="L92">		String response = &quot;&quot;;</span>
+<span class="fc" id="L93">		Order updated_order = null;</span>
+		do {
+<span class="fc" id="L95">			readItems();</span>
+<span class="fc" id="L96">			LOGGER.info(&quot;\nPlease enter ID of item to add:&quot;);</span>
+<span class="fc" id="L97">			Long item_id = utils.getLong();</span>
+<span class="fc" id="L98">			LOGGER.info(&quot;\nPlease enter the quantity of the item:&quot;);</span>
+<span class="fc" id="L99">			Long quantity = utils.getLong();</span>
+<span class="fc" id="L100">			Item item = orderDAO.readItem(item_id);</span>
+<span class="fc" id="L101">			Long stock = item.getQuantity();</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">			if(stock &lt; quantity) {</span>
+<span class="nc" id="L103">				LOGGER.info(&quot;\nERROR: insufficient stock!&quot;);</span>
+			}
+			else {
+<span class="fc bfc" id="L106" title="All 2 branches covered.">				for(int i=0; i&lt;quantity; i++) {</span>
+<span class="fc" id="L107">					updated_order = orderDAO.createOrderline(order_id, item_id);</span>
+				}
+<span class="fc" id="L109">				stock -= quantity;</span>
+<span class="fc" id="L110">				item.setQuantity(stock);</span>
+<span class="fc" id="L111">				orderDAO.updateItem(item);</span>
+			}
+<span class="fc" id="L113">			LOGGER.info(&quot;\nAdd another item? [y/?]:&quot;);</span>
+<span class="fc" id="L114">			response = utils.getString();</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		}while(response.equals(&quot;y&quot;));</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if(newItem) {</span>
+<span class="fc" id="L117">			LOGGER.info(&quot;\nOrder created!&quot;);</span>
+		}else {
+<span class="nc" id="L119">			LOGGER.info(&quot;\nOrder Updated!&quot;);</span>
+		}
+<span class="fc" id="L121">		return updated_order;</span>
+	}
+	
 	@Override
 	public int delete() {
-<span class="nc" id="L107">		LOGGER.info(&quot;\nPlease enter the id of the order you would like to delete:&quot;);</span>
-<span class="nc" id="L108">		Long order_id = utils.getLong();</span>
-<span class="nc" id="L109">		return orderDAO.delete(order_id);</span>
+<span class="fc" id="L126">		LOGGER.info(&quot;\nPlease enter the id of the order you would like to delete:&quot;);</span>
+<span class="fc" id="L127">		Long order_id = utils.getLong();</span>
+<span class="fc" id="L128">		return orderDAO.delete(order_id);</span>
+	}
+	
+	public int deleteItem(Long order_id) {	// Should return int?
+<span class="fc" id="L132">		LOGGER.info(&quot;\nPlease enter the ID of the item to delete:&quot;);</span>
+<span class="fc" id="L133">		Long item_id = utils.getLong();</span>
+<span class="fc" id="L134">		return orderDAO.deleteItem(order_id, item_id);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

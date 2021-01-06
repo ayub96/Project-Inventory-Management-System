@@ -24,14 +24,14 @@ public class IMS {
 	private final ItemController items;
 	private final Utils utils;
 
-	public IMS() {
-		this.utils = new Utils();									// initialise the other classes we will need to use
-		final CustomerDAO custDAO = new CustomerDAO();				// a value can be assigned to a final variable only ONE time, WHY IS CustomerDAO publicly instantiated and not privately?
-		this.customers = new CustomerController(custDAO, utils);
+	public IMS() {					
+		final CustomerDAO custDAO = new CustomerDAO();				
 		final ItemDAO itemDAO = new ItemDAO();
+		final OrderDAO orderDAO = new OrderDAO();
+		this.utils = new Utils();
+		this.customers = new CustomerController(custDAO, utils);
 		this.items = new ItemController(itemDAO, utils);
-		final OrderDAO orderDAO = new OrderDAO(itemDAO);
-		this.orders = new OrderController(orderDAO, itemDAO, custDAO, items, utils);
+		this.orders = new OrderController(orderDAO, utils);
 	}	
 	
 	public void imsSystem() {
@@ -100,6 +100,14 @@ public class IMS {
 		default:
 			break;
 		}
+	}
+
+	public IMS(CustomerController customers, OrderController orders, ItemController items, Utils utils) {
+		super();
+		this.customers = customers;
+		this.orders = orders;
+		this.items = items;
+		this.utils = utils;
 	}
 
 }
