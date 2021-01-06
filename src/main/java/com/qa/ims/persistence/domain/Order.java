@@ -7,6 +7,7 @@ public class Order {
 
 	private Long order_id;
 	private Long customer_id;
+	String date;
 	private List<Item> items = new ArrayList<>();
 	
 	public Order() {
@@ -23,8 +24,9 @@ public class Order {
 		this.customer_id = customer_id;
 	}
 	
-	public Order(Long order_id, Long customer_id, List<Item> items) {
+	public Order(Long order_id, Long customer_id, String date, List<Item> items) {
 		super();
+		this.date = date;
 		this.order_id = order_id;
 		this.customer_id = customer_id;
 		this.items = items;
@@ -57,6 +59,7 @@ public class Order {
 		}
 		return "[order ID]: " + order_id 
 				+ "\n [customer ID]: " + customer_id
+				+ "\n [last updated]: " + date
 				+ "\n [items]:\n" + myItems 
 				+ " [Total]: " + total;
 	}

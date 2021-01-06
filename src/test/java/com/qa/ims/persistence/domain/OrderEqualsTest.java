@@ -93,8 +93,8 @@ public class OrderEqualsTest {
 		itemsA = null;
 		List<Item> itemsB = new ArrayList<>();
 		itemsB.add(new Item(2L, "FIFA", 10L, 19.99));
-		Order orderA = new Order(1L, 1L, itemsA);
-		Order orderB = new Order(1L, 1L, itemsB);
+		Order orderA = new Order(1L, 1L, "1984-01-01 00:00:00", itemsA);
+		Order orderB = new Order(1L, 1L, "1984-01-01 00:00:00", itemsB);
 		assertFalse(orderA.equals(orderB));
 	}
 	
@@ -102,11 +102,11 @@ public class OrderEqualsTest {
 	public void itemEqualFalse() {
 		List<Item> itemsA = new ArrayList<>();
 		itemsA.add(new Item(1L, "COD", 15L, 17.99));
-		Order orderA = new Order(1L, 1L, itemsA);
+		Order orderA = new Order(1L, 1L, "1984-01-01 00:00:00", itemsA);
 		
 		List<Item> itemsB = new ArrayList<>();
 		itemsB.add(new Item(2L, "FIFA", 10L, 19.99));
-		Order orderB = new Order(2L, 2L, itemsB);
+		Order orderB = new Order(2L, 2L, "1984-01-01 00:00:00", itemsB);
 		
 		assertFalse(orderB.equals(itemsA));
 	}
