@@ -52,9 +52,19 @@ The Unit tests can be found in the folder:
 The following Unit tests are available:
 
 ```
+CustomerTest.java
+CustomerEqualsTest.java
 CustomerDAOTest.java
+CustomerDAOTestFAIL.java
+ItemTest.java
+ItemEqualsTest.java
 ItemDAOTest.java
+ItemDAOTestFAIL.java
+OrderTest.java
+OrderEqualsTest.java
 OrderDAOTest.java
+OrderDAOTestFAIL.java
+
 ```
 
 Below is an example of a test implemented in OrderDAOTest:
