@@ -1,4 +1,4 @@
-Coverage: 68.8%
+Coverage: 82.5%
 # IMS Project
 
 The following project implements an Inventory Management System which utilises MySQL and Java. A user may create/read/update/delete (CRUD) customers/items/orders in the system. In addition, a user may
@@ -120,7 +120,3 @@ We use [SemVer](http://semver.org/) for versioning.
 * **Ayub Azhar-Yusuf** - *Completion of project* - [Ayub96](https://github.com/ayub96)
 
 ## License
-
-This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md) file for details 
-
-*For help in [Choosing a license](https://choosealicense.com/)*
