@@ -3,5 +3,4 @@ bin/
 .*
 !.gitignore
 *.log
-
-/target/
+target/
