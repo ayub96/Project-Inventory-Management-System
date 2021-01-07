@@ -60,7 +60,7 @@ public class CustomerController implements CrudController<Customer> {
 	@Override
 	public int delete() {
 		readAll();
-		LOGGER.info("\nPlease enter the customer id (NOTE: A customer may not be deleted if contained within an order):");
+		LOGGER.info("\nPlease enter the customer id (NOTE: Please delete all orders containing the customer first):");
 		Long id = utils.getLong();
 		return customerDAO.delete(id);
 	}
